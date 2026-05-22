@@ -1,0 +1,1356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Summer roadmap · May 21 – Aug 31, 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Karla:wght@300;400;500;600&family=Caveat:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================
+     TOKENS — warm editorial, aligned to portfolio site
+     Phase progression: terracotta → marigold → sage → sky
+     ========================================================= */
+  :root {
+    /* surfaces */
+    --surface:   #ffffff;
+    --surface-2: #faf8f5;
+    --page-bg:   #faf8f5;     /* warm cream — site bg */
+    --tint:      #f3efe8;     /* one step darker for nested surfaces */
+
+    /* ink scale */
+    --ink:   #1a1816;
+    --ink-2: #3e3935;
+    --ink-3: #6b645c;
+    --ink-4: #a8a098;
+    --ink-5: #c9c1b6;
+
+    /* rules */
+    --rule:        #e8e4de;
+    --rule-strong: #d8d2c8;
+
+    /* phase accents */
+    --p1: #cc4425;  --p1-bg: #fce0d6;   /* terracotta */
+    --p2: #d99518;  --p2-bg: #fdf0cc;   /* marigold   */
+    --p3: #5a9b73;  --p3-bg: #dbeae0;   /* sage (softened) */
+    --p4: #1a7fad;  --p4-bg: #d4ebf6;   /* sky        */
+
+    /* danger / hard deadline */
+    --danger:    #db6545;
+    --danger-bg: #fdebe4;
+
+    /* type stacks */
+    --font-serif:  'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+    --font-sans:   'Karla', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-script: 'Caveat', 'Bradley Hand', cursive;
+    --font-mono:   'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+
+    /* layout */
+    --container: 1040px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--page-bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ============ back link ============ */
+  .site-back {
+    padding-top: 28px;
+    padding-bottom: 0;
+  }
+  .site-back a {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    color: var(--ink-3);
+    text-decoration: none;
+    border-bottom: 0.5px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    letter-spacing: 0.005em;
+  }
+  .site-back a:hover { color: var(--p1); border-color: var(--p1); }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    padding: 64px 0 56px;
+    isolation: isolate;
+  }
+  .hero .blob {
+    position: absolute;
+    top: 8px;
+    left: -90px;
+    width: 460px;
+    height: 320px;
+    background: var(--p1-bg);
+    border-radius: 62% 38% 46% 54% / 60% 44% 56% 40%;
+    opacity: 0.55;
+    z-index: -1;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+  .hero .blob.two {
+    top: auto; bottom: -30px; left: auto; right: -80px;
+    width: 260px; height: 200px;
+    background: var(--p4-bg);
+    border-radius: 48% 52% 70% 30% / 56% 30% 70% 44%;
+    opacity: 0.5;
+  }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(40px, 7vw, 68px);
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    line-height: 1.02;
+    color: var(--ink);
+    margin: 0;
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--p1);
+  }
+  .hero-sub {
+    font-family: var(--font-script);
+    font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+    font-weight: 500;
+    color: var(--ink-3);
+    margin: 14px 0 0;
+    line-height: 1.1;
+  }
+  .hero-meta {
+    margin-top: 36px;
+    display: flex;
+    gap: 36px;
+    flex-wrap: wrap;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    color: var(--ink-3);
+  }
+  .hero-meta .lbl {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .hero-meta strong { color: var(--ink); font-weight: 500; }
+
+  /* ============ FLOOR / GOAL ============ */
+  .goals {
+    padding: 24px 0 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 0.5px solid var(--rule);
+    padding: 26px 28px 28px;
+  }
+  .card.floor { border-radius: 24px 10px 18px 10px; }
+  .card.goal  { border-radius: 12px 24px 12px 22px; }
+
+  .card-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .card-label .sw {
+    width: 9px; height: 9px;
+    border: 0.5px solid var(--ink);
+  }
+  .card-label.floor-l .sw { background: var(--ink); }
+
+  .card h3 {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin: 10px 0 4px;
+  }
+  .card .cap {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    color: var(--ink-3);
+    font-style: italic;
+    margin: 0 0 14px;
+  }
+  .card ul {
+    margin: 0; padding: 0; list-style: none;
+    display: flex; flex-direction: column;
+    gap: 6px;
+  }
+  .card li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .card.floor li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 9px;
+    width: 5px; height: 5px;
+    background: var(--ink);
+  }
+  .card.goal li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 9px;
+    width: 5px; height: 5px;
+    border: 0.5px solid var(--ink);
+  }
+
+  /* ============ SECTION SHARED ============ */
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin: 0 0 14px;
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .section-title em { font-style: italic; color: var(--p1); }
+  .section-lede {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    margin: 0 0 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ============ BIRD'S-EYE GANTT ============ */
+  .overview {
+    padding: 0 0 96px;
+  }
+
+  .birdeye-frame {
+    background: rgba(255, 255, 255, 0.8);
+    border: 0.5px solid var(--rule);
+    border-radius: 18px 10px 24px 10px;
+    padding: 24px 24px 22px;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .birdeye {
+    min-width: 720px;
+    display: grid;
+    grid-template-columns: repeat(14, minmax(0, 1fr));
+    column-gap: 0;
+    row-gap: 0;
+    position: relative;
+    padding-top: 8px;
+  }
+
+  /* month + week labels */
+  .be-month-row, .be-week-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+  .be-month {
+    grid-column: span 1;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 4px;
+    border-bottom: 0.5px solid transparent;
+  }
+  .be-month.has-label {
+    border-bottom-color: var(--rule-strong);
+    color: var(--ink);
+  }
+
+  .be-week {
+    text-align: left;
+    padding: 8px 0 14px 6px;
+    font-family: var(--font-mono);
+    line-height: 1.2;
+    border-left: 0.5px solid var(--rule);
+  }
+  .be-week.month-start { border-left: 0.5px solid var(--ink-4); }
+  .be-week .n { font-size: 10.5px; color: var(--ink); font-weight: 500; }
+  .be-week .d { font-size: 9px; color: var(--ink-4); margin-top: 1px; }
+
+  /* phase bands row */
+  .be-bands {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    height: 36px;
+    margin-top: 4px;
+  }
+  .be-band {
+    margin: 0 2px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
+  }
+  .be-band .nb {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 8.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.95);
+    flex: 0 0 auto;
+  }
+  .be-band.p1 { background: var(--p1); }
+  .be-band.p2 { background: var(--p2); }
+  .be-band.p3 { background: var(--p3); }
+  .be-band.p4 { background: var(--p4); }
+
+  /* milestone row (markers above) */
+  .be-milestones {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    height: 70px;
+    position: relative;
+    margin-bottom: 2px;
+  }
+  .be-ms {
+    position: relative;
+    grid-column: span 1;
+    align-self: end;
+  }
+  .be-ms .ms-pin {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px; height: 8px;
+    background: var(--ink);
+  }
+  .be-ms .ms-stem {
+    position: absolute;
+    bottom: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.5px;
+    height: 14px;
+    background: var(--ink);
+  }
+  .be-ms .ms-label {
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .be-ms .ms-label .tag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 2px;
+  }
+  .be-ms.danger .ms-pin,
+  .be-ms.danger .ms-stem { background: var(--danger); }
+  .be-ms.danger .ms-label .tag { color: var(--danger); }
+  .be-ms.final .ms-pin { background: var(--surface); border: 1.25px solid var(--ink); }
+
+  /* ============ SECTION DIVIDER ============ */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px auto 24px;
+    width: 100%;
+    max-width: 360px;
+    position: relative;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  .section-divider .ornament {
+    width: 7px;
+    height: 7px;
+    background: var(--ink-4);
+    transform: rotate(45deg);
+    margin: 0 14px;
+    flex: 0 0 auto;
+  }
+  @media (max-width: 768px) {
+    .section-divider { margin: 4px auto 16px; max-width: 50%; }
+  }
+
+  /* ============ PHASE SECTIONS ============ */
+  .phase-list {
+    padding: 0 0 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  .phase-section {
+    position: relative;
+  }
+  .phase-section-head {
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 0.5px solid var(--rule-strong);
+  }
+  .phase-section-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .phase-pill {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 6px 12px 5px;
+    color: var(--surface);
+    line-height: 1;
+    align-self: center;
+  }
+  .phase-pill.p1 { background: var(--p1); }
+  .phase-pill.p2 { background: var(--p2); }
+  .phase-pill.p3 { background: var(--p3); }
+  .phase-pill.p4 { background: var(--p4); }
+
+  .phase-title {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.3px;
+    line-height: 1.1;
+    margin: 0 0 10px;
+  }
+  .phase-section.p1 .phase-title { color: var(--p1); }
+  .phase-section.p2 .phase-title { color: var(--p2); }
+  .phase-section.p3 .phase-title { color: var(--p3); }
+  .phase-section.p4 .phase-title { color: var(--p4); }
+
+  .phase-range {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    margin-left: auto;
+  }
+  .phase-intent {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    margin: 0;
+    font-style: italic;
+  }
+
+  /* weeks grid inside a phase */
+  .weeks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  .week-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 0.5px solid var(--rule);
+    padding: 22px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+  }
+  /* organic asymmetric radii — varied */
+  .week-card.r1 { border-radius: 18px 8px 14px 10px; }
+  .week-card.r2 { border-radius: 10px 22px 8px 18px; }
+  .week-card.r3 { border-radius: 14px 8px 22px 10px; }
+  .week-card.r4 { border-radius: 8px 18px 10px 22px; }
+  .week-card.r5 { border-radius: 22px 10px 8px 18px; }
+
+  .week-card.gate {
+    background: rgba(255, 255, 255, 0.8);
+    border: 0.5px solid var(--rule-strong);
+    box-shadow: inset 4px 0 0 var(--phase, var(--ink));
+  }
+
+  .week-head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .week-meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .week-num {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--phase, var(--ink-2));
+  }
+  .week-date {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-4);
+    letter-spacing: 0.02em;
+    margin-left: auto;
+  }
+  .week-focus {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 2px 0 0;
+  }
+
+  .week-card .tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .track-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .track-block + .track-block { padding-top: 12px; border-top: 0.5px dashed var(--rule); }
+  .track-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .track-items {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .track-items li {
+    position: relative;
+    padding-left: 14px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .track-items li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 4px; height: 4px;
+    background: var(--phase, var(--ink-3));
+  }
+
+  /* flag — hard deadline / gate */
+  .flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+    padding: 8px 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    line-height: 1.35;
+    border-radius: 4px 10px 4px 10px;
+  }
+  .flag .tag { font-weight: 500; }
+  .flag .txt {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--ink-2);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+  }
+  .flag.hard {
+    background: var(--danger-bg);
+    border: 0.5px solid var(--danger);
+    color: var(--danger);
+  }
+  .flag.gate {
+    background: var(--phase-bg, var(--tint));
+    border: 0.5px solid var(--phase, var(--rule-strong));
+    color: var(--phase, var(--ink-2));
+  }
+
+  /* phase color hook (CSS vars) */
+  .phase-section.p1 { --phase: var(--p1); --phase-bg: var(--p1-bg); }
+  .phase-section.p2 { --phase: var(--p2); --phase-bg: var(--p2-bg); }
+  .phase-section.p3 { --phase: var(--p3); --phase-bg: var(--p3-bg); }
+  .phase-section.p4 { --phase: var(--p4); --phase-bg: var(--p4-bg); }
+
+  /* ============ FOOTER (baseline + legend + colophon) ============ */
+  .baseline {
+    background: rgba(255, 255, 255, 0.8);
+    border: 0.5px solid var(--rule);
+    border-radius: 22px 10px 18px 12px;
+    padding: 26px 28px;
+    margin-bottom: 26px;
+  }
+  .baseline-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 6px;
+  }
+  .baseline-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+  .baseline-body {
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .baseline-body .sep { color: var(--ink-4); padding: 0 8px; }
+
+  .legend {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 0 auto 32px;
+    width: max-content;
+    max-width: 100%;
+    padding: 0 4px;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+  }
+  .legend .item { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .legend .sw { width: 18px; height: 9px; flex: 0 0 auto; }
+  .legend .sw.p1 { background: var(--p1); }
+  .legend .sw.p2 { background: var(--p2); }
+  .legend .sw.p3 { background: var(--p3); }
+  .legend .sw.p4 { background: var(--p4); }
+  .legend .sw.dot { width: 10px; height: 10px; transform: rotate(45deg); background: var(--ink); }
+  .legend .sw.dot.danger { background: var(--danger); }
+
+  .colophon {
+    padding: 28px 0 56px;
+    border-top: 0.5px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 760px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 48px 0 36px; }
+    .hero .blob { left: -120px; width: 360px; height: 240px; }
+    .hero .blob.two { display: none; }
+    .goals { grid-template-columns: 1fr; padding-bottom: 56px; }
+    .phase-section-head { gap: 10px 14px; }
+    .phase-range { margin-left: 0; width: 100%; }
+    .weeks { gap: 14px; }
+    .week-card { padding: 18px 18px 20px; }
+    .phase-list { gap: 40px; padding-bottom: 56px; }
+    .be-band { font-size: 12px; padding: 0 8px; }
+    .be-band .nb { font-size: 7.5px; padding: 2px 4px; }
+  }
+
+  @media (max-width: 420px) {
+    .container { padding: 0 16px; }
+    .week-focus { font-size: 19px; }
+    .card { padding: 22px 20px 24px; }
+    .baseline { padding: 22px 22px; }
+    .be-band { font-size: 0; padding: 0; }
+    .be-band .nb { font-size: 8.5px; padding: 3px 5px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- back link -->
+<div class="container site-back">
+  <a href="index.html">← back to Serena's site</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<div class="container">
+  <section class="hero" style="padding: 64px 0px 30px">
+    <span class="blob" aria-hidden="true"></span>
+    <span class="blob two" aria-hidden="true"></span>
+    <h1 class="hero-title">2026 Summer <em>Roadmap</em></h1>
+    <p class="hero-sub">14 weeks · May 21 – Aug 31, 2026</p>
+  </section>
+
+  <!-- ============ FLOOR / GOAL ============ -->
+  <section class="goals" style="padding: 24px 0px 50px">
+    <article class="card floor">
+      <div class="card-label floor-l"><span class="sw"></span>Floor — won't drop below</div>
+      <h3>The non-negotiable summer.</h3>
+      <p class="cap">It counts as a success if I hit this.</p>
+      <ul>
+        <li>MVP shipped</li>
+        <li>10+ users tested</li>
+        <li>5 researcher conversations</li>
+        <li>3 Friday posts published</li>
+      </ul>
+    </article>
+    <article class="card goal">
+      <div class="card-label"><span class="sw"></span>Goal — building toward</div>
+      <h3>The summer I'm aiming at.</h3>
+      <p class="cap">Stretch outcomes if pace and luck cooperate.</p>
+      <ul>
+        <li>Polished product</li>
+        <li>30+ users tested</li>
+        <li>8 researcher conversations</li>
+        <li>6 Friday posts + synthesis piece</li>
+        <li>Fall continuation locked</li>
+      </ul>
+    </article>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"><span class="ornament"></span></div>
+
+  <!-- ============ BIRD'S-EYE GANTT ============ -->
+  <section class="overview" style="padding: 0px 0px 50px">
+    <p class="section-eyebrow">At a glance</p>
+    <h2 class="section-title">The summer, on <em>one strip</em>.</h2>
+    <p class="section-lede">Four phases across fourteen weeks, with three gates and one hard deadline.</p>
+
+    <div class="birdeye-frame">
+      <div class="birdeye">
+
+        <!-- milestone row -->
+        <div class="be-milestones">
+          <div class="be-ms danger" style="grid-column: 1;">
+            <span class="ms-label"><span class="tag">Hard</span>Accountability call</span>
+            <span class="ms-stem"></span>
+            <span class="ms-pin"></span>
+          </div>
+          <div class="be-ms" style="grid-column: 7;">
+            <span class="ms-label"><span class="tag">Gate 1</span>Prototype</span>
+            <span class="ms-stem"></span>
+            <span class="ms-pin"></span>
+          </div>
+          <div class="be-ms" style="grid-column: 11;">
+            <span class="ms-label"><span class="tag">Gate 2</span>Floor secured</span>
+            <span class="ms-stem"></span>
+            <span class="ms-pin"></span>
+          </div>
+          <div class="be-ms final" style="grid-column: 14;">
+            <span class="ms-label"><span class="tag">Final</span>Locked</span>
+            <span class="ms-stem"></span>
+            <span class="ms-pin"></span>
+          </div>
+        </div>
+
+        <!-- phase bands -->
+        <div class="be-bands">
+          <div class="be-band p1" style="grid-column: 1 / 3;"><span class="nb">P1</span><span>Foundation</span></div>
+          <div class="be-band p2" style="grid-column: 3 / 8;"><span class="nb">P2</span><span>Build + learn</span></div>
+          <div class="be-band p3" style="grid-column: 8 / 12;"><span class="nb">P3</span><span>Test + iterate</span></div>
+          <div class="be-band p4" style="grid-column: 12 / 15;"><span class="nb">P4</span><span>Polish + synthesize</span></div>
+        </div>
+
+        <!-- month row -->
+        <div class="be-month-row">
+          <div class="be-month has-label" style="grid-column: 1 / 3;">May</div>
+          <div class="be-month has-label" style="grid-column: 3 / 7;">Jun</div>
+          <div class="be-month has-label" style="grid-column: 7 / 11;">Jul</div>
+          <div class="be-month has-label" style="grid-column: 11 / 15;">Aug</div>
+        </div>
+
+        <!-- week row -->
+        <div class="be-week-row">
+          <div class="be-week month-start"><div class="n">W01</div><div class="d">21–31</div></div>
+          <div class="be-week month-start"><div class="n">W02</div><div class="d">Jun 1–7</div></div>
+          <div class="be-week"><div class="n">W03</div><div class="d">8–14</div></div>
+          <div class="be-week"><div class="n">W04</div><div class="d">15–21</div></div>
+          <div class="be-week"><div class="n">W05</div><div class="d">22–28</div></div>
+          <div class="be-week"><div class="n">W06</div><div class="d">29–Jul 5</div></div>
+          <div class="be-week month-start"><div class="n">W07</div><div class="d">6–12</div></div>
+          <div class="be-week"><div class="n">W08</div><div class="d">13–19</div></div>
+          <div class="be-week"><div class="n">W09</div><div class="d">20–26</div></div>
+          <div class="be-week"><div class="n">W10</div><div class="d">27–Aug 2</div></div>
+          <div class="be-week month-start"><div class="n">W11</div><div class="d">3–9</div></div>
+          <div class="be-week"><div class="n">W12</div><div class="d">10–16</div></div>
+          <div class="be-week"><div class="n">W13</div><div class="d">17–23</div></div>
+          <div class="be-week"><div class="n">W14</div><div class="d">24–31</div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"><span class="ornament"></span></div>
+
+  <!-- ============ PHASE SECTIONS ============ -->
+  <div class="phase-list" style="padding: 0px 0px 40px">
+
+    <!-- ===== PHASE 1 ===== -->
+    <section class="phase-section p1">
+      <header class="phase-section-head">
+        <div class="phase-section-meta">
+          <span class="phase-pill p1">Phase 1</span>
+          <span class="phase-range">May 21 – Jun 7 · 2 weeks</span>
+        </div>
+        <h2 class="phase-title">Foundation.</h2>
+        <p class="phase-intent">Set the table — name, scope, channels, calendar. Everything downstream depends on this being clean.</p>
+      </header>
+
+      <div class="weeks">
+
+        <article class="week-card r1">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 01</span>
+              <span class="week-date">May 21 – 31</span>
+            </div>
+            <h3 class="week-focus">Kickoff infrastructure.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Pick working name</li>
+                <li>MVP scope 1-pager</li>
+                <li>Beachhead user list (10–15)</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>Researcher shortlist (10–15)</li>
+                <li>Site blog template live</li>
+                <li>3 outreach emails</li>
+                <li>Friday post #1</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flag hard">
+            <span class="tag">Hard</span>
+            <span class="txt">Accountability call scheduled by Sun May 31.</span>
+          </div>
+        </article>
+
+        <article class="week-card r2">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 02</span>
+              <span class="week-date">Jun 1 – 7</span>
+            </div>
+            <h3 class="week-focus">Setup complete.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Repo set up</li>
+                <li>Dev environment</li>
+                <li>Analytics wired</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>Competitive analysis (5–8 apps)</li>
+                <li>Researcher CRM in Notion</li>
+                <li>Outreach + convo-note templates</li>
+                <li>3 more outreach emails (6 total)</li>
+                <li>Friday post #2</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== PHASE 2 ===== -->
+    <section class="phase-section p2">
+      <header class="phase-section-head">
+        <div class="phase-section-meta">
+          <span class="phase-pill p2">Phase 2</span>
+          <span class="phase-range">Jun 8 – Jul 12 · 5 weeks</span>
+        </div>
+        <h2 class="phase-title">Build + learn.</h2>
+        <p class="phase-intent">Ship the prototype, talk to researchers, write in the open. The longest stretch — pace it like a marathon.</p>
+      </header>
+
+      <div class="weeks">
+
+        <article class="week-card r3">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 03</span>
+              <span class="week-date">Jun 8 – 14</span>
+            </div>
+            <h3 class="week-focus">Onboarding + intent prompt.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Onboarding flow</li>
+                <li>"Why are you opening this?" intent prompt</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>1–2 researcher convos</li>
+                <li>Friday post #3</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r4">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 04</span>
+              <span class="week-date">Jun 15 – 21</span>
+            </div>
+            <h3 class="week-focus">Tracking + lock.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Screen-time tracking</li>
+                <li>Lock mechanism</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>1–2 researcher convos</li>
+                <li>Friday post #4 — build log</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r5">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 05</span>
+              <span class="week-date">Jun 22 – 28</span>
+            </div>
+            <h3 class="week-focus">Social layer.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Streak feature</li>
+                <li>Invite-friend feature</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>1 researcher convo</li>
+                <li>Friday post #5</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r1">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 06</span>
+              <span class="week-date">Jun 29 – Jul 5</span>
+            </div>
+            <h3 class="week-focus">Self-dogfood.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Use own product for a full week</li>
+                <li>Iterate on personal pain points</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>1 researcher convo</li>
+                <li>Friday post #6 — dogfooding learnings</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r2 gate">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 07</span>
+              <span class="week-date">Jul 6 – 12</span>
+            </div>
+            <h3 class="week-focus">Prototype polish.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Bug fixes + polish</li>
+                <li>Prototype demo recorded</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>Friday post #7</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flag gate">
+            <span class="tag">Gate 1</span>
+            <span class="txt">Working prototype · 2 researcher convos · 2 posts.</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== PHASE 3 ===== -->
+    <section class="phase-section p3">
+      <header class="phase-section-head">
+        <div class="phase-section-meta">
+          <span class="phase-pill p3">Phase 3</span>
+          <span class="phase-range">Jul 13 – Aug 9 · 4 weeks</span>
+        </div>
+        <h2 class="phase-title">Test + iterate.</h2>
+        <p class="phase-intent">Put it in real hands. Listen hard, ship fast, write what you learn.</p>
+      </header>
+
+      <div class="weeks">
+
+        <article class="week-card r3">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 08</span>
+              <span class="week-date">Jul 13 – 19</span>
+            </div>
+            <h3 class="week-focus">Soft launch.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Onboard 5 beachhead users</li>
+                <li>Daily check-ins through first week</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>1 researcher convo</li>
+                <li>Friday post #8 — launch reflections</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r4">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 09</span>
+              <span class="week-date">Jul 20 – 26</span>
+            </div>
+            <h3 class="week-focus">Iterate.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Onboard 5 more (10+ total)</li>
+                <li>Iterate on top-3 feedback themes</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>1 researcher convo</li>
+                <li>Friday post #9 — user themes</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r5">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 10</span>
+              <span class="week-date">Jul 27 – Aug 2</span>
+            </div>
+            <h3 class="week-focus">Deep learnings.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Structured user interviews (10 users)</li>
+                <li>Synthesize findings</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>1 researcher convo</li>
+                <li>Friday post #10 — what works / what doesn't</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r1 gate">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 11</span>
+              <span class="week-date">Aug 3 – 9</span>
+            </div>
+            <h3 class="week-focus">Stabilize.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Bug fixes from interviews</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>Begin synthesis writing</li>
+                <li>Friday post #11</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flag gate">
+            <span class="tag">Gate 2</span>
+            <span class="txt">10+ users tested · 5+ researcher convos · 4+ posts.</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== PHASE 4 ===== -->
+    <section class="phase-section p4">
+      <header class="phase-section-head">
+        <div class="phase-section-meta">
+          <span class="phase-pill p4">Phase 4</span>
+          <span class="phase-range">Aug 10 – Aug 31 · 3 weeks</span>
+        </div>
+        <h2 class="phase-title">Polish + synthesize.</h2>
+        <p class="phase-intent">Tighten the product, write the story, lock the fall. End the summer with momentum, not exhaustion.</p>
+      </header>
+
+      <div class="weeks">
+
+        <article class="week-card r2">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 12</span>
+              <span class="week-date">Aug 10 – 16</span>
+            </div>
+            <h3 class="week-focus">Refinement.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Build</span>
+              <ul class="track-items">
+                <li>Polish product based on testing data</li>
+              </ul>
+            </div>
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>Draft synthesis piece</li>
+                <li>1 more researcher convo</li>
+                <li>Friday post #12</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r3">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 13</span>
+              <span class="week-date">Aug 17 – 23</span>
+            </div>
+            <h3 class="week-focus">Fall planning.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>Outreach for fall continuation (independent study / research collab / fellowship)</li>
+                <li>Publish synthesis piece</li>
+                <li>Friday post #13 — positioning article</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r4 gate">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Week 14</span>
+              <span class="week-date">Aug 24 – 31</span>
+            </div>
+            <h3 class="week-focus">Close.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <span class="track-label">Research + content</span>
+              <ul class="track-items">
+                <li>Final summer summary post</li>
+                <li>Friday post #14 — summer in review</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flag gate">
+            <span class="tag">Final</span>
+            <span class="txt">Refined product · synthesis published · fall continuation locked.</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"><span class="ornament"></span></div>
+
+  </div>
+
+  <!-- ============ BASELINE FOOTER ============ -->
+  <footer class="baseline">
+    <div class="baseline-label" style="text-align: center">Weekly baseline · every week, no exceptions</div>
+    <h3 class="baseline-title" style="text-align: center">The non-negotiables that quietly hold it all up.</h3>
+    <div class="baseline-body" style="text-align: center; font-size: 14px">Workout 3–5× · Friday accountability call · newsletter sweep 30 min × 3 days · ship log update Sunday</div>
+  </footer>
+
+  <!-- legend -->
+  <div class="legend" style="text-align: center">
+    <span class="item"><span class="sw p1"></span>Foundation</span>
+    <span class="item"><span class="sw p2"></span>Build + learn</span>
+    <span class="item"><span class="sw p3"></span>Test + iterate</span>
+    <span class="item"><span class="sw p4"></span>Polish + synthesize</span>
+    <span class="item"><span class="sw dot"></span>Milestone</span>
+    <span class="item"><span class="sw dot danger"></span>Hard deadline</span>
+  </div>
+
+  <!-- colophon -->
+  <div class="colophon">
+    <div>v3 · drafted May 21, 2026</div>
+    <div>14 weeks · 4 phases · 3 gates · 1 founder</div>
+  </div>
+
+</div><!-- /.container -->
+
+</body>
+</html>
