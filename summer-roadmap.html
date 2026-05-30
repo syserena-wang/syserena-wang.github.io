@@ -36,9 +36,12 @@
     --p3: #5a9b73;  --p3-bg: #dbeae0;   /* sage (softened) */
     --p4: #1a7fad;  --p4-bg: #d4ebf6;   /* sky        */
 
+    /* floor / goal semantics */
+    --floor:    #8a6a4d;  --floor-bg: #ece1d4;   /* grounded clay-brown */
+
     /* danger / hard deadline */
-    --danger:    #db6545;
-    --danger-bg: #fdebe4;
+    --danger:    #a85a47;
+    --danger-bg: #f3e4dd;
 
     /* type stacks */
     --font-serif:  'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
@@ -89,8 +92,7 @@
   /* ============ HERO ============ */
   .hero {
     position: relative;
-    padding: 64px 0 56px;
-    isolation: isolate;
+    padding: 64px 0 30px;
   }
   .hero .blob {
     position: absolute;
@@ -128,10 +130,10 @@
   }
   .hero-sub {
     font-family: var(--font-script);
-    font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+    font-size: 25px;
     font-weight: 500;
     color: var(--ink-3);
-    margin: 14px 0 0;
+    margin: 8px 0 0;
     line-height: 1.1;
   }
   .hero-meta {
@@ -157,7 +159,7 @@
 
   /* ============ FLOOR / GOAL ============ */
   .goals {
-    padding: 24px 0 80px;
+    padding: 20px 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 18px;
@@ -169,8 +171,20 @@
     border: 0.5px solid var(--rule);
     padding: 26px 28px 28px;
   }
-  .card.floor { border-radius: 24px 10px 18px 10px; }
-  .card.goal  { border-radius: 12px 24px 12px 22px; }
+  /* Floor — grounded earth: muted clay-brown wash */
+  .card.floor {
+    border-radius: 24px 10px 18px 10px;
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.85) 35%, var(--floor-bg));
+    border: 0.5px solid color-mix(in srgb, var(--floor) 22%, var(--rule));
+    box-shadow: inset 4px 0 0 var(--floor);
+  }
+  /* Goal — growth: airy sage wash glowing upward */
+  .card.goal  {
+    border-radius: 12px 24px 12px 22px;
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.85) 35%, var(--p3-bg));
+    border: 0.5px solid color-mix(in srgb, var(--p3) 22%, var(--rule));
+    box-shadow: inset 4px 0 0 var(--p3);
+  }
 
   .card-label {
     display: inline-flex;
@@ -187,7 +201,10 @@
     width: 9px; height: 9px;
     border: 0.5px solid var(--ink);
   }
-  .card-label.floor-l .sw { background: var(--ink); }
+  .card-label.floor-l { color: var(--floor); }
+  .card-label.floor-l .sw { background: var(--floor); border-color: var(--floor); }
+  .card.goal .card-label { color: var(--p3); font-weight: 500; }
+  .card.goal .card-label .sw { border-color: var(--p3); }
 
   .card h3 {
     font-family: var(--font-serif);
@@ -199,6 +216,9 @@
     color: var(--ink);
     margin: 10px 0 4px;
   }
+  /* Floor stays upright/solid; Goal leans aspirational */
+  .card.floor h3 { font-style: normal; }
+  .card.goal h3 { color: var(--p3); font-weight: 700; }
   .card .cap {
     font-family: var(--font-sans);
     font-size: 13.5px;
@@ -223,14 +243,14 @@
     position: absolute;
     left: 0; top: 9px;
     width: 5px; height: 5px;
-    background: var(--ink);
+    background: var(--floor);
   }
   .card.goal li::before {
     content: "";
     position: absolute;
     left: 0; top: 9px;
     width: 5px; height: 5px;
-    border: 0.5px solid var(--ink);
+    border: 0.5px solid var(--p3);
   }
 
   /* ============ SECTION SHARED ============ */
@@ -266,7 +286,7 @@
 
   /* ============ BIRD'S-EYE GANTT ============ */
   .overview {
-    padding: 0 0 96px;
+    padding: 0 0 40px;
   }
 
   .birdeye-frame {
@@ -454,7 +474,7 @@
 
   /* ============ PHASE SECTIONS ============ */
   .phase-list {
-    padding: 0 0 80px;
+    padding: 0 0 40px;
     display: flex;
     flex-direction: column;
     gap: 56px;
@@ -675,6 +695,7 @@
     border-radius: 22px 10px 18px 12px;
     padding: 26px 28px;
     margin-bottom: 26px;
+    text-align: center;
   }
   .baseline-label {
     font-family: var(--font-mono);
@@ -695,11 +716,42 @@
   }
   .baseline-body {
     font-family: var(--font-sans);
-    font-size: 14.5px;
+    font-size: 14px;
     color: var(--ink-2);
     line-height: 1.7;
   }
   .baseline-body .sep { color: var(--ink-4); padding: 0 8px; }
+
+  .baseline-list {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: none;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    gap: 10px 72px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .baseline-list li {
+    position: relative;
+    padding-left: 18px;
+  }
+  .baseline-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--floor);
+    opacity: 0.55;
+  }
 
   .legend {
     display: flex;
@@ -740,6 +792,134 @@
     letter-spacing: 0.06em;
   }
 
+  /* ============ FRAMING NOTE + PERMISSION CLAUSE (v4) ============ */
+  .framing {
+    padding: 8px 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+  .framing-note {
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+    font-style: italic;
+    color: var(--ink-3);
+    line-height: 1.65;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .permission {
+    background: rgba(255, 255, 255, 0.45);
+    border: 0.5px solid var(--rule);
+    border-radius: 16px 8px 14px 8px;
+    padding: 13px 26px 14px;
+    max-width: none;
+    width: 100%;
+    margin: 0 auto 50px;
+    text-align: center;
+  }
+  .permission-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 5px;
+  }
+  .permission .stmt {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink-3);
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  /* revision note — standing label + per-revision italic note */
+  .revision {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+  }
+  .revision-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 10px;
+  }
+  .revision .framing-note {
+    margin: 0;
+    text-align: left;
+    max-width: none;
+    width: 100%;
+  }
+
+  /* anchor item — emphasized track item that sets pace for the rest */
+  .track-items li.anchor {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .track-items li.anchor::before {
+    width: 5px; height: 5px;
+    background: var(--phase, var(--ink));
+  }
+  .track-items li.anchor .anchor-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--phase, var(--ink-3));
+    margin-right: 8px;
+    padding: 2px 6px;
+    background: var(--phase-bg, var(--tint));
+    vertical-align: 1px;
+  }
+
+  /* phase-level gate banner */
+  .gate-banner {
+    margin-top: 24px;
+    padding: 16px 22px;
+    background: var(--phase-bg, var(--tint));
+    border: 0.5px solid var(--phase, var(--rule-strong));
+    border-radius: 14px 4px 14px 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .gate-banner .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--phase, var(--ink-2));
+    flex: 0 0 auto;
+  }
+  .gate-banner .txt {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .gate-banner.close {
+    background: var(--danger-bg);
+    border-color: var(--danger);
+  }
+  .gate-banner.close .tag { color: var(--danger); }
+
   /* ============ RESPONSIVE ============ */
   @media (max-width: 760px) {
     .container { padding: 0 20px; }
@@ -761,6 +941,7 @@
     .week-focus { font-size: 19px; }
     .card { padding: 22px 20px 24px; }
     .baseline { padding: 22px 22px; }
+    .baseline-list { grid-template-columns: 1fr; max-width: 480px; justify-content: stretch; }
     .be-band { font-size: 0; padding: 0; }
     .be-band .nb { font-size: 8.5px; padding: 3px 5px; }
   }
@@ -775,70 +956,79 @@
 
 <!-- ============ HERO ============ -->
 <div class="container">
-  <section class="hero" style="padding: 64px 0px 30px">
+  <section class="hero">
     <span class="blob" aria-hidden="true"></span>
     <span class="blob two" aria-hidden="true"></span>
     <h1 class="hero-title">2026 Summer <em>Roadmap</em></h1>
     <p class="hero-sub">14 weeks · May 21 – Aug 31, 2026</p>
   </section>
 
+  <!-- ============ FRAMING NOTE + PERMISSION CLAUSE ============ -->
+  <section class="framing">
+    <div class="revision">
+      <div class="revision-label">A living document</div>
+      <p class="framing-note">v4 — recalibrated for the season I'm actually in. Fewer, deeper goals; rest built in rather than bolted on; pace over pressure.</p>
+    </div>
+  </section>
+
   <!-- ============ FLOOR / GOAL ============ -->
-  <section class="goals" style="padding: 24px 0px 50px">
+  <section class="goals">
     <article class="card floor">
       <div class="card-label floor-l"><span class="sw"></span>Floor — won't drop below</div>
       <h3>The non-negotiable summer.</h3>
       <p class="cap">It counts as a success if I hit this.</p>
       <ul>
-        <li>MVP shipped</li>
-        <li>10+ users tested</li>
-        <li>5 researcher conversations</li>
-        <li>3 Friday posts published</li>
+        <li>MVP shipped — core loop working end to end</li>
+        <li>~5 users actually using it</li>
+        <li>One no-build weekend day held, every week</li>
+        <li>Coaching direction chosen</li>
+        <li>A pace I can sustain all season</li>
       </ul>
     </article>
     <article class="card goal">
       <div class="card-label"><span class="sw"></span>Goal — building toward</div>
       <h3>The summer I'm aiming at.</h3>
-      <p class="cap">Stretch outcomes if pace and luck cooperate.</p>
+      <p class="cap">Where the summer goes if capacity allows.</p>
       <ul>
-        <li>Polished product</li>
-        <li>30+ users tested</li>
-        <li>8 researcher conversations</li>
-        <li>6 Friday posts + synthesis piece</li>
-        <li>Fall continuation locked</li>
+        <li>MVP solid, ~5 engaged users with real usage data</li>
+        <li>3–4 researcher conversations</li>
+        <li>Coaching cert enrolled / underway</li>
+        <li>Synthesis piece published</li>
+        <li>Fall continuation explored</li>
       </ul>
     </article>
   </section>
 
+  <article class="permission">
+    <div class="permission-label">Permission</div>
+    <p class="stmt">Pausing any week is not failure. Pace over pressure.</p>
+  </article>
+
   <div class="section-divider" aria-hidden="true"><span class="ornament"></span></div>
 
   <!-- ============ BIRD'S-EYE GANTT ============ -->
-  <section class="overview" style="padding: 0px 0px 50px">
+  <section class="overview">
     <p class="section-eyebrow">At a glance</p>
     <h2 class="section-title">The summer, on <em>one strip</em>.</h2>
-    <p class="section-lede">Four phases across fourteen weeks, with three gates and one hard deadline.</p>
+    <p class="section-lede">Four phases across fourteen weeks. Two gates and one close — pace over pressure.</p>
 
     <div class="birdeye-frame">
       <div class="birdeye">
 
         <!-- milestone row -->
         <div class="be-milestones">
-          <div class="be-ms danger" style="grid-column: 1;">
-            <span class="ms-label"><span class="tag">Hard</span>Accountability call</span>
+          <div class="be-ms" style="grid-column: 8;">
+            <span class="ms-label"><span class="tag">Gate 1</span>Core loop</span>
             <span class="ms-stem"></span>
             <span class="ms-pin"></span>
           </div>
-          <div class="be-ms" style="grid-column: 7;">
-            <span class="ms-label"><span class="tag">Gate 1</span>Prototype</span>
+          <div class="be-ms" style="grid-column: 12;">
+            <span class="ms-label"><span class="tag">Gate 2</span>Users on it</span>
             <span class="ms-stem"></span>
             <span class="ms-pin"></span>
           </div>
-          <div class="be-ms" style="grid-column: 11;">
-            <span class="ms-label"><span class="tag">Gate 2</span>Floor secured</span>
-            <span class="ms-stem"></span>
-            <span class="ms-pin"></span>
-          </div>
-          <div class="be-ms final" style="grid-column: 14;">
-            <span class="ms-label"><span class="tag">Final</span>Locked</span>
+          <div class="be-ms danger" style="grid-column: 14;">
+            <span class="ms-label"><span class="tag">Close</span>Aug 31</span>
             <span class="ms-stem"></span>
             <span class="ms-pin"></span>
           </div>
@@ -846,10 +1036,10 @@
 
         <!-- phase bands -->
         <div class="be-bands">
-          <div class="be-band p1" style="grid-column: 1 / 3;"><span class="nb">P1</span><span>Foundation</span></div>
-          <div class="be-band p2" style="grid-column: 3 / 8;"><span class="nb">P2</span><span>Build + learn</span></div>
-          <div class="be-band p3" style="grid-column: 8 / 12;"><span class="nb">P3</span><span>Test + iterate</span></div>
-          <div class="be-band p4" style="grid-column: 12 / 15;"><span class="nb">P4</span><span>Polish + synthesize</span></div>
+          <div class="be-band p1" style="grid-column: 1 / 4;"><span class="nb">P1</span><span>Recalibrate</span></div>
+          <div class="be-band p2" style="grid-column: 4 / 9;"><span class="nb">P2</span><span>Build the core</span></div>
+          <div class="be-band p3" style="grid-column: 9 / 13;"><span class="nb">P3</span><span>Ship to ~5</span></div>
+          <div class="be-band p4" style="grid-column: 13 / 15;"><span class="nb">P4</span><span>Consolidate</span></div>
         </div>
 
         <!-- month row -->
@@ -882,20 +1072,25 @@
     </div>
   </section>
 
-  <div class="section-divider" aria-hidden="true"><span class="ornament"></span></div>
+  <div class="section-divider" aria-hidden="true" style="margin: 8px 308px 40px"><span class="ornament"></span></div>
 
   <!-- ============ PHASE SECTIONS ============ -->
-  <div class="phase-list" style="padding: 0px 0px 40px">
+  <header class="phase-list-head" style="margin-bottom: 40px">
+    <p class="section-eyebrow">Phase by phase</p>
+    <h2 class="section-title">The plan, <em>in detail</em>.</h2>
+    <p class="section-lede">Fourteen weeks, four phases — week by week across build, coaching + health, and rest.</p>
+  </header>
+  <div class="phase-list">
 
     <!-- ===== PHASE 1 ===== -->
     <section class="phase-section p1">
       <header class="phase-section-head">
         <div class="phase-section-meta">
           <span class="phase-pill p1">Phase 1</span>
-          <span class="phase-range">May 21 – Jun 7 · 2 weeks</span>
+          <span class="phase-range">May 21 – Jun 14 · 3 weeks</span>
         </div>
-        <h2 class="phase-title">Foundation.</h2>
-        <p class="phase-intent">Set the table — name, scope, channels, calendar. Everything downstream depends on this being clean.</p>
+        <h2 class="phase-title">Recalibrate.</h2>
+        <p class="phase-intent">Lighter weeks count. Settle the rhythm before adding load.</p>
       </header>
 
       <div class="weeks">
@@ -903,61 +1098,51 @@
         <article class="week-card r1">
           <header class="week-head">
             <div class="week-meta-row">
-              <span class="week-num">Week 01</span>
-              <span class="week-date">May 21 – 31</span>
+              <span class="week-num">Build</span>
             </div>
-            <h3 class="week-focus">Kickoff infrastructure.</h3>
+            <h3 class="week-focus">Lean MVP scope.</h3>
           </header>
           <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Build</span>
               <ul class="track-items">
-                <li>Pick working name</li>
-                <li>MVP scope 1-pager</li>
-                <li>Beachhead user list (10–15)</li>
+                <li>One core loop only</li>
+                <li>Identify ~5 beachhead users</li>
+                <li>Set up dev environment / repo when there's energy</li>
               </ul>
             </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>Researcher shortlist (10–15)</li>
-                <li>Site blog template live</li>
-                <li>3 outreach emails</li>
-                <li>Friday post #1</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flag hard">
-            <span class="tag">Hard</span>
-            <span class="txt">Accountability call scheduled by Sun May 31.</span>
           </div>
         </article>
 
         <article class="week-card r2">
           <header class="week-head">
             <div class="week-meta-row">
-              <span class="week-num">Week 02</span>
-              <span class="week-date">Jun 1 – 7</span>
+              <span class="week-num">Coaching + Health</span>
             </div>
-            <h3 class="week-focus">Setup complete.</h3>
+            <h3 class="week-focus">Direction + dependency.</h3>
           </header>
           <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Build</span>
               <ul class="track-items">
-                <li>Repo set up</li>
-                <li>Dev environment</li>
-                <li>Analytics wired</li>
+                <li>Choose coaching direction — wellness / life / exec — and book a research block</li>
+                <li class="anchor"><span class="anchor-tag">Anchor</span>How I pace this season — the dependency that sets timing for the rest of the plan.</li>
               </ul>
             </div>
+          </div>
+        </article>
+
+        <article class="week-card r3">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Rest + content</span>
+            </div>
+            <h3 class="week-focus">Establish the rhythm.</h3>
+          </header>
+          <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Research + content</span>
               <ul class="track-items">
-                <li>Competitive analysis (5–8 apps)</li>
-                <li>Researcher CRM in Notion</li>
-                <li>Outreach + convo-note templates</li>
-                <li>3 more outreach emails (6 total)</li>
-                <li>Friday post #2</li>
+                <li>Blog template live</li>
+                <li>Post #1 — recalibration, capacity language</li>
+                <li>Establish the no-build weekend day</li>
               </ul>
             </div>
           </div>
@@ -971,147 +1156,73 @@
       <header class="phase-section-head">
         <div class="phase-section-meta">
           <span class="phase-pill p2">Phase 2</span>
-          <span class="phase-range">Jun 8 – Jul 12 · 5 weeks</span>
+          <span class="phase-range">Jun 15 – Jul 19 · 5 weeks</span>
         </div>
-        <h2 class="phase-title">Build + learn.</h2>
-        <p class="phase-intent">Ship the prototype, talk to researchers, write in the open. The longest stretch — pace it like a marathon.</p>
+        <h2 class="phase-title">Build the core.</h2>
+        <p class="phase-intent">Marathon pace. Core loop only.</p>
       </header>
 
       <div class="weeks">
 
-        <article class="week-card r3">
-          <header class="week-head">
-            <div class="week-meta-row">
-              <span class="week-num">Week 03</span>
-              <span class="week-date">Jun 8 – 14</span>
-            </div>
-            <h3 class="week-focus">Onboarding + intent prompt.</h3>
-          </header>
-          <div class="tracks">
-            <div class="track-block">
-              <span class="track-label">Build</span>
-              <ul class="track-items">
-                <li>Onboarding flow</li>
-                <li>"Why are you opening this?" intent prompt</li>
-              </ul>
-            </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>1–2 researcher convos</li>
-                <li>Friday post #3</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <article class="week-card r4">
-          <header class="week-head">
-            <div class="week-meta-row">
-              <span class="week-num">Week 04</span>
-              <span class="week-date">Jun 15 – 21</span>
-            </div>
-            <h3 class="week-focus">Tracking + lock.</h3>
-          </header>
-          <div class="tracks">
-            <div class="track-block">
-              <span class="track-label">Build</span>
-              <ul class="track-items">
-                <li>Screen-time tracking</li>
-                <li>Lock mechanism</li>
-              </ul>
-            </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>1–2 researcher convos</li>
-                <li>Friday post #4 — build log</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <article class="week-card r5">
-          <header class="week-head">
-            <div class="week-meta-row">
-              <span class="week-num">Week 05</span>
-              <span class="week-date">Jun 22 – 28</span>
-            </div>
-            <h3 class="week-focus">Social layer.</h3>
-          </header>
-          <div class="tracks">
-            <div class="track-block">
-              <span class="track-label">Build</span>
-              <ul class="track-items">
-                <li>Streak feature</li>
-                <li>Invite-friend feature</li>
-              </ul>
-            </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>1 researcher convo</li>
-                <li>Friday post #5</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
         <article class="week-card r1">
           <header class="week-head">
             <div class="week-meta-row">
-              <span class="week-num">Week 06</span>
-              <span class="week-date">Jun 29 – Jul 5</span>
+              <span class="week-num">Build</span>
             </div>
-            <h3 class="week-focus">Self-dogfood.</h3>
+            <h3 class="week-focus">Core loop.</h3>
           </header>
           <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Build</span>
               <ul class="track-items">
-                <li>Use own product for a full week</li>
-                <li>Iterate on personal pain points</li>
-              </ul>
-            </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>1 researcher convo</li>
-                <li>Friday post #6 — dogfooding learnings</li>
+                <li>Onboarding + "why are you opening this?" intent prompt</li>
+                <li>Screen-time tracking</li>
+                <li>Lock mechanism</li>
+                <li>Self-dogfood for a week and iterate</li>
               </ul>
             </div>
           </div>
         </article>
 
-        <article class="week-card r2 gate">
+        <article class="week-card r2">
           <header class="week-head">
             <div class="week-meta-row">
-              <span class="week-num">Week 07</span>
-              <span class="week-date">Jul 6 – 12</span>
+              <span class="week-num">Coaching + Health</span>
             </div>
-            <h3 class="week-focus">Prototype polish.</h3>
+            <h3 class="week-focus">Program + plan.</h3>
           </header>
           <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Build</span>
               <ul class="track-items">
-                <li>Bug fixes + polish</li>
-                <li>Prototype demo recorded</li>
+                <li>Research programs and choose one</li>
+                <li class="anchor"><span class="anchor-tag">Anchor</span>Rest rhythms — movement, sleep, no-build day — settling in.</li>
               </ul>
             </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>Friday post #7</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flag gate">
-            <span class="tag">Gate 1</span>
-            <span class="txt">Working prototype · 2 researcher convos · 2 posts.</span>
           </div>
         </article>
 
+        <article class="week-card r3">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Rest + content</span>
+            </div>
+            <h3 class="week-focus">Build log + listening.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <ul class="track-items">
+                <li>~Biweekly posts — build log</li>
+                <li>1–2 researcher conversations</li>
+                <li>No-build weekend day held</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="gate-banner">
+        <span class="tag">Gate 1 · ≈ Jul 19</span>
+        <span class="txt">Core loop working · coaching program chosen · weekly rhythm settled.</span>
       </div>
     </section>
 
@@ -1120,121 +1231,72 @@
       <header class="phase-section-head">
         <div class="phase-section-meta">
           <span class="phase-pill p3">Phase 3</span>
-          <span class="phase-range">Jul 13 – Aug 9 · 4 weeks</span>
+          <span class="phase-range">Jul 20 – Aug 16 · 4 weeks</span>
         </div>
-        <h2 class="phase-title">Test + iterate.</h2>
-        <p class="phase-intent">Put it in real hands. Listen hard, ship fast, write what you learn.</p>
+        <h2 class="phase-title">Ship to ~5.</h2>
+        <p class="phase-intent">Real hands, light touch.</p>
       </header>
 
       <div class="weeks">
 
+        <article class="week-card r1">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Build</span>
+            </div>
+            <h3 class="week-focus">Onboard real users.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <ul class="track-items">
+                <li>Onboard ~5 users onto the real MVP</li>
+                <li>Light daily check-ins through week one</li>
+                <li>Iterate on top feedback themes</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="week-card r2">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Coaching + Health</span>
+            </div>
+            <h3 class="week-focus">Enrolled.</h3>
+          </header>
+          <div class="tracks">
+            <div class="track-block">
+              <ul class="track-items">
+                <li>Cert enrolled / first module underway</li>
+                <li class="anchor"><span class="anchor-tag">Anchor</span>Rest rhythms holding through the busiest stretch.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
         <article class="week-card r3">
           <header class="week-head">
             <div class="week-meta-row">
-              <span class="week-num">Week 08</span>
-              <span class="week-date">Jul 13 – 19</span>
+              <span class="week-num">Rest + content</span>
             </div>
-            <h3 class="week-focus">Soft launch.</h3>
+            <h3 class="week-focus">User themes.</h3>
           </header>
           <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Build</span>
               <ul class="track-items">
-                <li>Onboard 5 beachhead users</li>
-                <li>Daily check-ins through first week</li>
-              </ul>
-            </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>1 researcher convo</li>
-                <li>Friday post #8 — launch reflections</li>
+                <li>~Biweekly posts — user themes</li>
+                <li>1–2 researcher conversations</li>
+                <li>No-build weekend day held</li>
               </ul>
             </div>
           </div>
         </article>
 
-        <article class="week-card r4">
-          <header class="week-head">
-            <div class="week-meta-row">
-              <span class="week-num">Week 09</span>
-              <span class="week-date">Jul 20 – 26</span>
-            </div>
-            <h3 class="week-focus">Iterate.</h3>
-          </header>
-          <div class="tracks">
-            <div class="track-block">
-              <span class="track-label">Build</span>
-              <ul class="track-items">
-                <li>Onboard 5 more (10+ total)</li>
-                <li>Iterate on top-3 feedback themes</li>
-              </ul>
-            </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>1 researcher convo</li>
-                <li>Friday post #9 — user themes</li>
-              </ul>
-            </div>
-          </div>
-        </article>
+      </div>
 
-        <article class="week-card r5">
-          <header class="week-head">
-            <div class="week-meta-row">
-              <span class="week-num">Week 10</span>
-              <span class="week-date">Jul 27 – Aug 2</span>
-            </div>
-            <h3 class="week-focus">Deep learnings.</h3>
-          </header>
-          <div class="tracks">
-            <div class="track-block">
-              <span class="track-label">Build</span>
-              <ul class="track-items">
-                <li>Structured user interviews (10 users)</li>
-                <li>Synthesize findings</li>
-              </ul>
-            </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>1 researcher convo</li>
-                <li>Friday post #10 — what works / what doesn't</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <article class="week-card r1 gate">
-          <header class="week-head">
-            <div class="week-meta-row">
-              <span class="week-num">Week 11</span>
-              <span class="week-date">Aug 3 – 9</span>
-            </div>
-            <h3 class="week-focus">Stabilize.</h3>
-          </header>
-          <div class="tracks">
-            <div class="track-block">
-              <span class="track-label">Build</span>
-              <ul class="track-items">
-                <li>Bug fixes from interviews</li>
-              </ul>
-            </div>
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>Begin synthesis writing</li>
-                <li>Friday post #11</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flag gate">
-            <span class="tag">Gate 2</span>
-            <span class="txt">10+ users tested · 5+ researcher convos · 4+ posts.</span>
-          </div>
-        </article>
-
+      <div class="gate-banner">
+        <span class="tag">Gate 2 · ≈ Aug 16</span>
+        <span class="txt">~5 users on the MVP with real usage data · cert underway.</span>
       </div>
     </section>
 
@@ -1243,35 +1305,41 @@
       <header class="phase-section-head">
         <div class="phase-section-meta">
           <span class="phase-pill p4">Phase 4</span>
-          <span class="phase-range">Aug 10 – Aug 31 · 3 weeks</span>
+          <span class="phase-range">Aug 17 – Aug 31 · 2 weeks</span>
         </div>
-        <h2 class="phase-title">Polish + synthesize.</h2>
-        <p class="phase-intent">Tighten the product, write the story, lock the fall. End the summer with momentum, not exhaustion.</p>
+        <h2 class="phase-title">Consolidate.</h2>
+        <p class="phase-intent">Tighten, write, look forward — end with momentum, not exhaustion.</p>
       </header>
 
       <div class="weeks">
 
-        <article class="week-card r2">
+        <article class="week-card r1">
           <header class="week-head">
             <div class="week-meta-row">
-              <span class="week-num">Week 12</span>
-              <span class="week-date">Aug 10 – 16</span>
+              <span class="week-num">Build</span>
             </div>
-            <h3 class="week-focus">Refinement.</h3>
+            <h3 class="week-focus">Polish.</h3>
           </header>
           <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Build</span>
               <ul class="track-items">
-                <li>Polish product based on testing data</li>
+                <li>Polish the MVP from usage data</li>
               </ul>
             </div>
+          </div>
+        </article>
+
+        <article class="week-card r2">
+          <header class="week-head">
+            <div class="week-meta-row">
+              <span class="week-num">Coaching + Health</span>
+            </div>
+            <h3 class="week-focus">Coursework continues.</h3>
+          </header>
+          <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Research + content</span>
               <ul class="track-items">
-                <li>Draft synthesis piece</li>
-                <li>1 more researcher convo</li>
-                <li>Friday post #12</li>
+                <li>Cert coursework continuing at its own pace</li>
               </ul>
             </div>
           </div>
@@ -1280,46 +1348,26 @@
         <article class="week-card r3">
           <header class="week-head">
             <div class="week-meta-row">
-              <span class="week-num">Week 13</span>
-              <span class="week-date">Aug 17 – 23</span>
+              <span class="week-num">Rest + content</span>
             </div>
-            <h3 class="week-focus">Fall planning.</h3>
+            <h3 class="week-focus">Synthesis + close.</h3>
           </header>
           <div class="tracks">
             <div class="track-block">
-              <span class="track-label">Research + content</span>
               <ul class="track-items">
-                <li>Outreach for fall continuation (independent study / research collab / fellowship)</li>
-                <li>Publish synthesis piece</li>
-                <li>Friday post #13 — positioning article</li>
+                <li>Write + publish synthesis piece</li>
+                <li>Explore fall continuation</li>
+                <li>Closing post — summer in review</li>
               </ul>
             </div>
           </div>
         </article>
 
-        <article class="week-card r4 gate">
-          <header class="week-head">
-            <div class="week-meta-row">
-              <span class="week-num">Week 14</span>
-              <span class="week-date">Aug 24 – 31</span>
-            </div>
-            <h3 class="week-focus">Close.</h3>
-          </header>
-          <div class="tracks">
-            <div class="track-block">
-              <span class="track-label">Research + content</span>
-              <ul class="track-items">
-                <li>Final summer summary post</li>
-                <li>Friday post #14 — summer in review</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flag gate">
-            <span class="tag">Final</span>
-            <span class="txt">Refined product · synthesis published · fall continuation locked.</span>
-          </div>
-        </article>
+      </div>
 
+      <div class="gate-banner close">
+        <span class="tag">Close · Aug 31</span>
+        <span class="txt">MVP solid · synthesis published · fall continuation explored. The only hard date all summer.</span>
       </div>
     </section>
 
@@ -1329,25 +1377,30 @@
 
   <!-- ============ BASELINE FOOTER ============ -->
   <footer class="baseline">
-    <div class="baseline-label" style="text-align: center">Weekly baseline · every week, no exceptions</div>
-    <h3 class="baseline-title" style="text-align: center">The non-negotiables that quietly hold it all up.</h3>
-    <div class="baseline-body" style="text-align: center; font-size: 14px">Workout 3–5× · Friday accountability call · newsletter sweep 30 min × 3 days · ship log update Sunday</div>
+    <div class="baseline-label">Weekly baseline · the wellbeing floor</div>
+    <h3 class="baseline-title">What holds the plan up, no matter the week.</h3>
+    <ul class="baseline-list">
+      <li>Ship a log only when there’s something to log</li>
+      <li>Movement most days — yoga is as good as a workout</li>
+      <li>Pausing any week is not failure — pace over pressure</li>
+      <li>One no-build weekend day, held every single week</li>
+    </ul>
   </footer>
 
   <!-- legend -->
-  <div class="legend" style="text-align: center">
-    <span class="item"><span class="sw p1"></span>Foundation</span>
-    <span class="item"><span class="sw p2"></span>Build + learn</span>
-    <span class="item"><span class="sw p3"></span>Test + iterate</span>
-    <span class="item"><span class="sw p4"></span>Polish + synthesize</span>
-    <span class="item"><span class="sw dot"></span>Milestone</span>
-    <span class="item"><span class="sw dot danger"></span>Hard deadline</span>
+  <div class="legend">
+    <span class="item"><span class="sw p1"></span>Recalibrate</span>
+    <span class="item"><span class="sw p2"></span>Build the core</span>
+    <span class="item"><span class="sw p3"></span>Ship to ~5</span>
+    <span class="item"><span class="sw p4"></span>Consolidate</span>
+    <span class="item"><span class="sw dot"></span>Gate</span>
+    <span class="item"><span class="sw dot danger"></span>Close · hard date</span>
   </div>
 
   <!-- colophon -->
   <div class="colophon">
-    <div>v3 · drafted May 21, 2026</div>
-    <div>14 weeks · 4 phases · 3 gates · 1 founder</div>
+    <div>v4 · recalibrated May 30, 2026</div>
+    <div>14 weeks · 3 tracks · 2 gates · pace over pressure · 1 founder</div>
   </div>
 
 </div><!-- /.container -->
