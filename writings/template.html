@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ✏️ EDIT: page title (shown in browser tab) -->
+  <title>Post title · Serena Wang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Karla:wght@300;400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --ink: #1a1816;
+      --ink-soft: #3e3935;
+      --ink-light: #6b645c;
+      --ink-faint: #a8a098;
+      --line: #e8e4de;
+      --terracotta: #cc4425;
+      --terracotta-light: #fce0d6;
+      --lavender: #6a4abf;
+      --lavender-light: #e4dbf5;
+      --sage: #2a8c55;
+      --sage-light: #c8edda;
+      --marigold-light: #fdf0cc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Karla', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,248,245,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-bottom-color: var(--line); }
+    .nav-inner {
+      max-width: 1040px; margin: 0 auto;
+      padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem; font-weight: 400;
+      color: var(--ink-light); text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--terracotta); }
+    .nav-links a.current { color: var(--terracotta); }
+
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 24px; height: 16px; position: relative; z-index: 110;
+    }
+    .hamburger span {
+      display: block; width: 100%; height: 1.5px;
+      background: var(--ink); border-radius: 1px;
+      position: absolute; left: 0; transition: all 0.3s;
+    }
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 7px; }
+    .hamburger span:nth-child(3) { top: 14px; }
+    .hamburger.open span:nth-child(1) { top: 7px; transform: rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+    /* ── ARTICLE ── */
+    .article-wrap {
+      max-width: 830px;
+      margin: 0 auto;
+      padding: 140px 32px 80px;
+    }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      margin-bottom: 56px;
+      transition: color 0.3s, gap 0.3s;
+    }
+    .back-link:hover { color: var(--terracotta); gap: 12px; }
+    .back-link::before {
+      content: '';
+      width: 18px; height: 1px;
+      background: currentColor;
+      position: relative;
+    }
+
+    .article-meta {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--ink-faint);
+    }
+    .article-meta .dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--ink-faint);
+    }
+    .article-tag {
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 0.62rem;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+    .tag-build      { background: var(--terracotta-light); color: var(--terracotta); }
+    .tag-interview  { background: var(--lavender-light);   color: var(--lavender); }
+    .tag-reflection { background: var(--sage-light);       color: var(--sage); }
+
+    .article-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.8px;
+      margin-bottom: 18px;
+      color: var(--ink);
+    }
+    .article-title em { font-style: italic; color: var(--terracotta); }
+
+    .article-deck {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.4;
+      color: var(--ink-light);
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+
+    /* divider before body */
+    .article-divider {
+      width: 60px; height: 1px;
+      background: var(--line);
+      margin: 0 0 40px;
+    }
+
+    /* ── BODY TYPOGRAPHY ──
+       Body uses Cormorant Garamond (literary serif) for a softer, flowing read. */
+    .article-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .article-body > * + * { margin-top: 1.3em; }
+
+    .article-body p {
+      font-weight: 500;
+    }
+    .article-body p:first-of-type::first-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.6em;
+      float: left;
+      line-height: 0.85;
+      padding: 6px 10px 0 0;
+      color: var(--terracotta);
+      font-weight: 500;
+    }
+
+    .article-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.85rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-top: 2.4em;
+      margin-bottom: 0.6em;
+      letter-spacing: -0.3px;
+    }
+    .article-body h2 em { font-style: italic; font-weight: 500; color: var(--terracotta); }
+
+    .article-body h3 {
+      font-family: 'Karla', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--ink-faint);
+      margin-top: 2em;
+      margin-bottom: 0.5em;
+    }
+
+    .article-body a {
+      color: var(--terracotta);
+      text-decoration: none;
+      border-bottom: 1px solid var(--terracotta-light);
+      transition: border-color 0.2s;
+    }
+    .article-body a:hover { border-color: var(--terracotta); }
+
+    .article-body strong { color: var(--ink); font-weight: 700; }
+    .article-body em { font-style: italic; }
+
+    .article-body blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.5;
+      color: var(--ink);
+      padding: 4px 0 4px 28px;
+      border-left: 2px solid var(--terracotta);
+      margin: 2em 0;
+    }
+    .article-body blockquote cite {
+      display: block;
+      font-family: 'Karla', sans-serif;
+      font-style: normal;
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+
+    .article-body ul, .article-body ol {
+      padding-left: 24px;
+    }
+    .article-body li { margin-bottom: 0.5em; }
+
+    .article-body hr {
+      border: none;
+      width: 80px;
+      height: 1px;
+      background: var(--line);
+      margin: 3em auto;
+    }
+
+    .article-body figure {
+      margin: 2em 0;
+    }
+    .article-body figure img {
+      width: 100%; height: auto;
+      border-radius: 6px;
+    }
+    .article-body figcaption {
+      font-size: 0.82rem;
+      color: var(--ink-faint);
+      text-align: center;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* ── ARTICLE FOOTER ── */
+    .article-footer {
+      margin-top: 80px;
+      padding-top: 36px;
+      border-top: 1px solid var(--line);
+    }
+    .article-footer p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--ink-light);
+    }
+    .footer-links a {
+      color: var(--terracotta);
+      text-decoration: none;
+      border-bottom: 1px solid var(--terracotta-light);
+      transition: border-color 0.2s;
+    }
+    .footer-links a:hover { border-color: var(--terracotta); }
+
+    /* ── PAGE FOOTER ── */
+    footer.site {
+      text-align: center;
+      padding: 28px 40px;
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.5px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 768px) {
+      .nav-inner { padding: 16px 24px; }
+      .nav-links {
+        display: none; flex-direction: column;
+        position: fixed; top: 0; right: 0;
+        width: 240px; height: 100vh;
+        background: var(--bg); padding: 80px 28px;
+        box-shadow: -8px 0 32px rgba(0,0,0,0.05);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1rem; padding: 10px 0; }
+      .hamburger { display: block; }
+      .article-wrap { padding: 110px 22px 60px; }
+      .article-body { font-size: 1.12rem; }
+      .article-body h2 { font-size: 1.55rem; }
+      .article-body p:first-of-type::first-letter { font-size: 3.2em; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Serena Wang</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../writings.html" class="current">Writings</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <article class="article-wrap">
+
+    <a href="../writings.html" class="back-link">All writings</a>
+
+    <!-- ════════════════════════════════════════════════════════════
+         ✏️ EDIT EVERYTHING BETWEEN HERE AND THE ARTICLE FOOTER
+         ════════════════════════════════════════════════════════════ -->
+
+    <div class="article-meta">
+      <!-- ✏️ EDIT: date -->
+      <span class="post-date">June 6, 2026</span>
+      <span class="dot"></span>
+      <!-- ✏️ EDIT: tag — use one of: tag-build / tag-interview / tag-reflection -->
+      <span class="article-tag tag-build">Build Update</span>
+      <span class="dot"></span>
+      <!-- ✏️ EDIT: read time -->
+      <span>6 min read</span>
+    </div>
+
+    <!-- ✏️ EDIT: title. Wrap part of the phrase in <em>…</em> for the italic terracotta accent. -->
+    <h1 class="article-title">A clean title <em>in italic</em></h1>
+
+    <!-- ✏️ EDIT (or delete): one-sentence subtitle / dek -->
+    <p class="article-deck">A short subtitle that frames the piece in one breath — the question, the angle, or the conclusion in miniature.</p>
+
+    <div class="article-divider"></div>
+
+    <div class="article-body">
+
+      <!-- ✏️ EDIT THE BODY. The first paragraph gets a drop cap automatically. -->
+      <p>Open with the strongest sentence you have. This template auto-renders a terracotta drop-cap on the first letter of the first paragraph, so the first word matters more than the rest of the sentence. Keep the opening grounded in a moment, an observation, or a tension — not a thesis statement.</p>
+
+      <p>Then give yourself room to think on the page. A second paragraph is where most pieces start to find their footing. You can use <strong>bold for emphasis</strong>, <em>italics for asides</em>, or <a href="#">link out</a> to people, sources, or earlier writing.</p>
+
+      <h2>A section break <em>looks like this</em></h2>
+
+      <p>Use H2s sparingly — maybe two or three across a 1,000-word piece. They work best when they're declarative rather than label-like (good: "Why I stopped tracking everything"; less good: "Methodology"). H2s support the same italic-terracotta accent as the title.</p>
+
+      <h3>Smaller sub-label</h3>
+
+      <p>For finer subdivisions within a section, use the small caps H3 label. Keep these short — three or four words.</p>
+
+      <blockquote>
+        Use pull-quotes to slow the reader down. They work best for sentences that earn the pause — your own line you want to draw attention to, or someone else's that you're responding to.
+        <cite>— Optional attribution</cite>
+      </blockquote>
+
+      <p>Lists work when the underlying thought is genuinely list-shaped:</p>
+
+      <ul>
+        <li>Each item should be self-contained.</li>
+        <li>Parallel structure helps — items that share a grammatical shape read faster.</li>
+        <li>Three to five items is the sweet spot; more than that, prose usually serves better.</li>
+      </ul>
+
+      <hr>
+
+      <p>The thin centered divider above signals a soft section change — useful for moving between scenes without a hard heading.</p>
+
+      <p>Close with the line you've been circling the whole piece. The last sentence is the one readers carry with them; treat it as the second-most-important sentence after the opener.</p>
+
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         ARTICLE FOOTER — optional, edit or delete
+         ════════════════════════════════════════════════════════════ -->
+    <div class="article-footer">
+      <p>If you've made it this far — thanks for reading. I'd love to hear what landed and what didn't.</p>
+      <div class="footer-links">
+        <a href="mailto:syserena@mit.edu">Reply by email</a>
+        <a href="../writings.html">More writings</a>
+        <a href="../index.html#projects">See what I'm building</a>
+      </div>
+    </div>
+
+  </article>
+
+  <footer class="site">Built with intention &amp; care &mdash; Serena Wang, 2026</footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+      })
+    );
+  </script>
+
+</body>
+</html>

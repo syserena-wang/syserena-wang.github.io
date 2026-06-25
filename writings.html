@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writings · Serena Wang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --ink: #1a1816;
+      --ink-soft: #3e3935;
+      --ink-light: #6b645c;
+      --ink-faint: #a8a098;
+      --line: #e8e4de;
+
+      --terracotta: #cc4425;
+      --terracotta-mid: #e07856;
+      --terracotta-light: #fce0d6;
+      --sage: #2a8c55;
+      --sage-mid: #5db87e;
+      --sage-light: #c8edda;
+      --lavender: #6a4abf;
+      --lavender-mid: #9b82d6;
+      --lavender-light: #e4dbf5;
+      --sky: #1a7fad;
+      --sky-mid: #54aed0;
+      --sky-light: #c8e8f6;
+      --marigold: #d99518;
+      --marigold-light: #fdf0cc;
+      --warm-cream: #f0e7da;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Karla', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 40px; }
+
+    /* ── NAV (matches homepage) ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,248,245,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-bottom-color: var(--line); }
+    .nav-inner {
+      max-width: 1040px; margin: 0 auto;
+      padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem; font-weight: 400;
+      color: var(--ink-light); text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--terracotta); }
+    .nav-links a.current { color: var(--terracotta); }
+
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 24px; height: 16px; position: relative; z-index: 110;
+    }
+    .hamburger span {
+      display: block; width: 100%; height: 1.5px;
+      background: var(--ink); border-radius: 1px;
+      position: absolute; left: 0; transition: all 0.3s;
+    }
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 7px; }
+    .hamburger span:nth-child(3) { top: 14px; }
+    .hamburger.open span:nth-child(1) { top: 7px; transform: rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+    /* ── BLOBS ── */
+    .blob { position: absolute; pointer-events: none; z-index: 0; will-change: border-radius; }
+    @keyframes morphBlob {
+      0%, 100% { border-radius: 60% 40% 52% 48% / 45% 55% 45% 55%; }
+      25% { border-radius: 48% 52% 42% 58% / 55% 40% 60% 45%; }
+      50% { border-radius: 42% 58% 55% 45% / 48% 52% 42% 58%; }
+      75% { border-radius: 55% 45% 48% 52% / 42% 58% 52% 48%; }
+    }
+    @keyframes morphBlob2 {
+      0%, 100% { border-radius: 52% 48% 44% 56% / 46% 58% 42% 54%; }
+      50% { border-radius: 44% 56% 52% 48% / 56% 44% 56% 44%; }
+    }
+    @keyframes morphBlob3 {
+      0%, 100% { border-radius: 50% 50% 46% 54% / 48% 52% 50% 50%; }
+      33% { border-radius: 58% 42% 50% 50% / 44% 56% 48% 52%; }
+      66% { border-radius: 44% 56% 56% 44% / 54% 46% 44% 56%; }
+    }
+
+    /* ── HEADER ── */
+    .page-header {
+      padding: 160px 0 70px;
+      position: relative;
+    }
+    .page-header .container { position: relative; z-index: 1; }
+    .header-blob-1 {
+      width: 320px; height: 260px;
+      top: 100px; right: -40px;
+      background: var(--lavender-light);
+      opacity: 0.7;
+      animation: morphBlob 18s ease-in-out infinite;
+    }
+    .header-blob-2 {
+      width: 180px; height: 160px;
+      top: 50%; left: -30px;
+      background: var(--marigold-light);
+      opacity: 0.55;
+      animation: morphBlob3 14s ease-in-out infinite -3s;
+    }
+    .header-eyebrow {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 3.5px;
+      color: var(--ink-faint);
+      margin-bottom: 18px;
+    }
+    .header-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 4.4rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+    .header-title em { font-style: italic; color: var(--terracotta); }
+    .header-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      letter-spacing: 1.5px;
+      margin-bottom: 28px;
+    }
+    .header-intro {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--ink-soft);
+      font-weight: 300;
+      max-width: 560px;
+    }
+
+    /* ── FILTERS ── */
+    .filters {
+      padding: 0 0 36px;
+      position: relative; z-index: 1;
+    }
+    .filter-row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      align-items: center;
+    }
+    .filter-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--ink-faint);
+      margin-right: 10px;
+    }
+    .filter-pill {
+      padding: 8px 16px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: var(--ink-light);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: inherit;
+    }
+    .filter-pill:hover { color: var(--terracotta); border-color: var(--terracotta); }
+    .filter-pill.active {
+      color: var(--surface);
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+    }
+
+    /* ── POSTS ── */
+    .posts {
+      padding: 0 0 120px;
+      position: relative;
+    }
+    .posts-blob {
+      width: 220px; height: 200px;
+      bottom: 120px; right: -60px;
+      background: var(--sage-light);
+      opacity: 0.5;
+      animation: morphBlob2 19s ease-in-out infinite;
+    }
+    .posts .container { position: relative; z-index: 1; }
+
+    .post-list {
+      display: flex; flex-direction: column;
+      gap: 4px;
+    }
+    .post-card {
+      display: block;
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+      text-decoration: none;
+      color: inherit;
+      transition: padding-left 0.3s ease;
+      position: relative;
+    }
+    .post-card:last-child { border-bottom: 1px solid var(--line); }
+    .post-card:hover { padding-left: 12px; }
+
+    .post-meta {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--ink-faint);
+    }
+    .post-date { font-weight: 500; }
+    .post-meta .dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--ink-faint);
+    }
+    .post-tag {
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 0.62rem;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+    .tag-build      { background: var(--terracotta-light); color: var(--terracotta); }
+    .tag-interview  { background: var(--lavender-light);   color: var(--lavender); }
+    .tag-reflection { background: var(--sage-light);       color: var(--sage); }
+
+    .post-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+      color: var(--ink);
+      transition: color 0.3s;
+    }
+    .post-card:hover .post-title { color: var(--terracotta); }
+
+    .post-excerpt {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--ink-light);
+      font-weight: 300;
+      max-width: 680px;
+      margin-bottom: 14px;
+    }
+    .post-readmore {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.74rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--terracotta);
+      transition: gap 0.3s;
+    }
+    .post-card:hover .post-readmore { gap: 16px; }
+    .post-readmore .arr {
+      width: 20px; height: 1px; background: var(--terracotta);
+      position: relative;
+    }
+    .post-readmore .arr::after {
+      content: ''; position: absolute;
+      right: 0; top: -2.5px;
+      width: 6px; height: 6px;
+      border-right: 1px solid var(--terracotta);
+      border-top: 1px solid var(--terracotta);
+      transform: rotate(45deg);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty {
+      padding: 60px 0;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .empty p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--ink-light);
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .empty span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      letter-spacing: 1px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 40px;
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.5px;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ── FADE IN ── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 16px 24px; }
+      .nav-links {
+        display: none; flex-direction: column;
+        position: fixed; top: 0; right: 0;
+        width: 240px; height: 100vh;
+        background: var(--bg); padding: 80px 28px;
+        box-shadow: -8px 0 32px rgba(0,0,0,0.05);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1rem; padding: 10px 0; }
+      .hamburger { display: block; }
+      .page-header { padding: 120px 0 50px; }
+      .header-blob-1, .header-blob-2, .posts-blob { opacity: 0.4; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .blob { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Serena Wang</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="writings.html" class="current">Writings</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <section class="page-header">
+    <div class="blob header-blob-1"></div>
+    <div class="blob header-blob-2"></div>
+    <div class="container">
+      <p class="header-eyebrow">Writings</p>
+      <h1 class="header-title">Notes from <em>the build</em></h1>
+      <p class="header-sub">build updates &middot; interviews &middot; reflections</p>
+      <p class="header-intro">A working notebook — periodic dispatches from the summer about my learnings and reflections.</p>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="filters">
+    <div class="container">
+      <div class="filter-row reveal">
+        <span class="filter-label">Filter</span>
+        <button class="filter-pill active" data-filter="all">All</button>
+        <button class="filter-pill" data-filter="build">Build Updates</button>
+        <button class="filter-pill" data-filter="interview">Interviews</button>
+        <button class="filter-pill" data-filter="reflection">Reflections</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS -->
+  <section class="posts">
+    <div class="blob posts-blob"></div>
+    <div class="container">
+      <div class="post-list" id="postList">
+
+        <!-- ════════════════════════════════════════════════════════════
+             To add a new piece: copy a <a class="post-card"> block below and edit.
+             data-tag values: "build", "interview", or "reflection" (drives the filter pills)
+             ════════════════════════════════════════════════════════════ -->
+
+        <a class="post-card reveal" href="writings/first-year-at-mit-sloan.html" data-tag="reflection">
+          <div class="post-meta">
+            <span class="post-date">June 25, 2026</span>
+            <span class="dot"></span>
+            <span class="post-tag tag-reflection">Reflection</span>
+            <span class="dot"></span>
+            <span>6 min read</span>
+          </div>
+          <h2 class="post-title">What my first year at MIT Sloan actually taught me</h2>
+          <p class="post-excerpt">I arrived chasing the AI wave. A year later I'm pointed somewhere I didn't expect — and, for the first time, sure of why.</p>
+          <span class="post-readmore">Read the piece <span class="arr"></span></span>
+        </a>
+
+      </div>
+
+      <!-- Empty state appears when no posts match the active filter -->
+      <div class="empty" id="emptyState" style="display:none;">
+        <p>Nothing here yet.</p>
+        <span>Pieces in this category are still drafting.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>Built with intention &amp; care &mdash; Serena Wang, 2026</footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+      })
+    );
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Filter pills
+    const pills = document.querySelectorAll('.filter-pill');
+    const cards = document.querySelectorAll('.post-card');
+    const emptyState = document.getElementById('emptyState');
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const filter = pill.dataset.filter;
+        let visibleCount = 0;
+        cards.forEach(card => {
+          const show = filter === 'all' || card.dataset.tag === filter;
+          card.style.display = show ? '' : 'none';
+          if (show) visibleCount++;
+        });
+        emptyState.style.display = visibleCount === 0 ? '' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>

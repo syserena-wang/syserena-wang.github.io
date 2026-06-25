@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What my first year at MIT Sloan actually taught me · Serena Wang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Karla:wght@300;400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --ink: #1a1816;
+      --ink-soft: #3e3935;
+      --ink-light: #6b645c;
+      --ink-faint: #a8a098;
+      --line: #e8e4de;
+      --terracotta: #cc4425;
+      --terracotta-light: #fce0d6;
+      --lavender: #6a4abf;
+      --lavender-light: #e4dbf5;
+      --sage: #2a8c55;
+      --sage-light: #c8edda;
+      --marigold-light: #fdf0cc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Karla', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,248,245,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-bottom-color: var(--line); }
+    .nav-inner {
+      max-width: 1040px; margin: 0 auto;
+      padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem; font-weight: 400;
+      color: var(--ink-light); text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--terracotta); }
+    .nav-links a.current { color: var(--terracotta); }
+
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 24px; height: 16px; position: relative; z-index: 110;
+    }
+    .hamburger span {
+      display: block; width: 100%; height: 1.5px;
+      background: var(--ink); border-radius: 1px;
+      position: absolute; left: 0; transition: all 0.3s;
+    }
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 7px; }
+    .hamburger span:nth-child(3) { top: 14px; }
+    .hamburger.open span:nth-child(1) { top: 7px; transform: rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+    /* ── ARTICLE ── */
+    .article-wrap {
+      max-width: 830px;
+      margin: 0 auto;
+      padding: 140px 32px 80px;
+    }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      margin-bottom: 56px;
+      transition: color 0.3s, gap 0.3s;
+    }
+    .back-link:hover { color: var(--terracotta); gap: 12px; }
+    .back-link::before {
+      content: '';
+      width: 18px; height: 1px;
+      background: currentColor;
+      position: relative;
+    }
+
+    .article-meta {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--ink-faint);
+    }
+    .article-meta .dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--ink-faint);
+    }
+    .article-tag {
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 0.62rem;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+    .tag-build      { background: var(--terracotta-light); color: var(--terracotta); }
+    .tag-interview  { background: var(--lavender-light);   color: var(--lavender); }
+    .tag-reflection { background: var(--sage-light);       color: var(--sage); }
+
+    .article-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.8px;
+      margin-bottom: 18px;
+      color: var(--ink);
+    }
+    .article-title em { font-style: italic; color: var(--terracotta); }
+
+    .article-deck {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.4;
+      color: var(--ink-light);
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+
+    .article-divider {
+      width: 60px; height: 1px;
+      background: var(--line);
+      margin: 0 0 40px;
+    }
+
+    /* ── BODY TYPOGRAPHY ──
+       Body uses Cormorant Garamond (literary serif) for a softer, less rigid read. */
+    .article-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .article-body > * + * { margin-top: 1.3em; }
+
+    .article-body p {
+      font-weight: 500;
+    }
+    .article-body p:first-of-type::first-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.6em;
+      float: left;
+      line-height: 0.85;
+      padding: 6px 10px 0 0;
+      color: var(--terracotta);
+      font-weight: 500;
+    }
+
+    .article-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.85rem;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-top: 2.4em;
+      margin-bottom: 0.6em;
+      letter-spacing: -0.3px;
+    }
+    .article-body h2 em { font-style: italic; font-weight: 500; color: var(--terracotta); }
+
+    .article-body a {
+      color: var(--terracotta);
+      text-decoration: none;
+      border-bottom: 1px solid var(--terracotta-light);
+      transition: border-color 0.2s;
+    }
+    .article-body a:hover { border-color: var(--terracotta); }
+
+    .article-body strong { color: var(--ink); font-weight: 700; }
+    .article-body em { font-style: italic; }
+
+    /* Pull-aside style for the single italic line — the phone-call quote */
+    .article-body p.callout {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      line-height: 1.5;
+      color: var(--ink);
+      text-align: center;
+      padding: 0 0;
+      margin: 1.8em 0;
+    }
+    .article-body p.callout::first-letter { all: unset; } /* don't drop-cap a callout */
+
+    /* ── ARTICLE FOOTER ── */
+    .article-footer {
+      margin-top: 80px;
+      padding-top: 36px;
+      border-top: 1px solid var(--line);
+    }
+    .article-footer p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--ink-light);
+    }
+    .footer-links a {
+      color: var(--terracotta);
+      text-decoration: none;
+      border-bottom: 1px solid var(--terracotta-light);
+      transition: border-color 0.2s;
+    }
+    .footer-links a:hover { border-color: var(--terracotta); }
+
+    /* ── PAGE FOOTER ── */
+    footer.site {
+      text-align: center;
+      padding: 28px 40px;
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.5px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 768px) {
+      .nav-inner { padding: 16px 24px; }
+      .nav-links {
+        display: none; flex-direction: column;
+        position: fixed; top: 0; right: 0;
+        width: 240px; height: 100vh;
+        background: var(--bg); padding: 80px 28px;
+        box-shadow: -8px 0 32px rgba(0,0,0,0.05);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1rem; padding: 10px 0; }
+      .hamburger { display: block; }
+      .article-wrap { padding: 110px 22px 60px; }
+      .article-body { font-size: 1.12rem; }
+      .article-body h2 { font-size: 1.55rem; }
+      .article-body p:first-of-type::first-letter { font-size: 3.2em; }
+      .article-body p.callout { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">Serena Wang</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#writings" class="current">Writings</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <article class="article-wrap">
+
+    <a href="../writings.html" class="back-link">All writings</a>
+
+    <div class="article-meta">
+      <span>June 25, 2026</span>
+      <span class="dot"></span>
+      <span class="article-tag tag-reflection">Reflection</span>
+      <span class="dot"></span>
+      <span>6 min read</span>
+    </div>
+
+    <h1 class="article-title">What my first year at MIT Sloan <em>actually taught me</em></h1>
+
+    <p class="article-deck">I arrived chasing the AI wave. A year later I'm pointed somewhere I didn't expect — and, for the first time, sure of why.</p>
+
+    <div class="article-divider"></div>
+
+    <div class="article-body">
+
+      <p>A little over a year ago, I received a phone call. 7 p.m., Central time.</p>
+
+      <p class="callout">"Congratulations — you're part of the MIT Sloan MBA Class of 2027."</p>
+
+      <p>I sat down on the sidewalk afterward, stunned and speechless, for I'm not sure how long. <em>There's no way they'd call this early.</em> The surprise arrived in more ways than one. A year later, I can say it plainly: getting into Sloan is one of the best things that has ever happened to me.</p>
+
+      <p>A few weeks ago, I sat in the audience of the <em>Advancing Humans with AI</em> symposium at the MIT Media Lab, listening to <a href="https://www.linkedin.com/in/rynlinthicum/" target="_blank" rel="noopener">Ryn Linthicum</a>, Anthropic's Head of User Well-Being Policy, speak just after <a href="https://www.linkedin.com/in/james-donovan-111a7a122/" target="_blank" rel="noopener">James Donovan</a>, who leads Learning and Cognitive Outcomes Research at OpenAI. Somewhere in that hour it landed on me how improbably lucky I am to be in that room — hearing some of the sharpest minds alive think out loud about questions the rest of the world is only starting to ask. I knew MIT was special. I didn't know the year would feel this magical.</p>
+
+      <h2>The part the brochures <em>leave out</em></h2>
+
+      <p>The honest version is that an MBA is a balancing act across three pillars — academics, networking, and job hunting. But to balance is to face a constant struggle between forces pulling in different directions, and to reluctantly accept tradeoffs you'd rather not make.</p>
+
+      <p>Time is precious everywhere in life. Inside an MBA, it becomes something closer to currency. Every hour is a forced choice between extraordinary options — a class, a recruiting event at Google, coffee with a former FAANG PM now eyeing consulting, a fifty-person retreat, drinks with alumni, sleep — and to choose one is to intentionally let go of the rest. I have never felt the price of a single hour the way I have this year.</p>
+
+      <p>And underneath the scheduling sits a quieter question most of us are too busy to say out loud. People don't come to an MBA because they've already found the answer to success. They come still looking for it — <em>What does success actually mean? What does mine look like?</em></p>
+
+      <h2>I came in <em>with a plan</em></h2>
+
+      <p>One of the first assignments I completed at Sloan was called "My User Manual." I arrived certain: pivot into the intersection of AI and social impact, land an internship at an AI startup, catch what I figured was my generation's dot-com wave.</p>
+
+      <p>Then the year went to work on the plan.</p>
+
+      <p>I'd come wanting to join the wave. What I didn't expect was how much I started wanting to build something of my own — not just intern near other people's ideas, but make one of mine real. And once that wish was out in the open, the comparing started. On a study tour in San Francisco, I was surrounded by people building at a velocity I admired and, honestly, envied. I kept doing the math in my head — the average YC founder is twenty-two, and I was about to turn thirty. I read that gap as a deficit, as proof I was already behind.</p>
+
+      <p>It took most of the year to reframe it: <strong>I'm not behind. I'm pointed somewhere else.</strong></p>
+
+      <p>Because almost everything being built in those rooms was infrastructure — tools for other builders, for enterprises, or for AI itself — and very little of it was for the actual human on the other end of the screen. When I heard Jonathan Haidt speak at MIT about what social-media platforms are doing to our attention and our minds — hardly news by now — that gap stopped feeling like something I was missing out on, and started feeling like the thing I wanted to spend my time on.</p>
+
+      <h2>The path you have to <em>choose</em></h2>
+
+      <p>Here is something I didn't understand going in: an MBA hands you a powerful default. Most of the program — Finance, Accounting, Operations, Strategy, Technology, and the machinery of recruiting — runs along that track, and so do most of the people in it. It is a genuinely good track.</p>
+
+      <p>But there's another path, far less taken — the self-directed one: research, freelancing, self-employment, or any kind of entrepreneurial venture. These are less visible to begin with, and they can look even more aberrant given the time and money you've just put into business school.</p>
+
+      <p>Looking back on my first year, I found myself strongly drawn to the classes that aren't really about traditional hard or soft skills. They ask you harder, more personal, sometimes almost philosophical questions instead — who you are, what you want to do with your one career, what mark you want to leave on the world. For me, those classes were ID Lab (Individual Development and Interpersonal Dynamics) and BSSF (Business Strategies for a Sustainable Future). Nobody is required to take them. I chose them, and they turned out to be the most consequential hours of my year.</p>
+
+      <p>ID Lab, taught by <a href="https://mitsloan.mit.edu/faculty/directory/kara-blackburn" target="_blank" rel="noopener">Kara Blackburn</a>, is hard to describe until you've sat in it. Across a semester, you reconstruct your own leadership story, give a three-minute talk to the whole class about a turning point in your life, gather candid feedback from the people who know you best, and meet one-on-one with an executive coach — all of it circling a single question: who are you, really, underneath the roles you've been performing? What the class gave me, more than anything, was a way to sort through the labels I'd been carrying — which of them merely <em>sound</em> good, and which are actually <em>true</em> for me — and to notice how much of what I'd long called "my" definition of success was inherited, not chosen.</p>
+
+      <p>BSSF, taught by <a href="https://mitsloan.mit.edu/faculty/directory/jason-jay" target="_blank" rel="noopener">Jason Jay</a>, did the parallel work on the outside. It opens with a question far bigger than any case I'd studied: how do we make sure people — and the natural world we're part of — can keep thriving for generations, and what is business's role in that? It's a class about planetary boundaries, what it actually means for a business to be sustainable, and how real Fortune 500 companies are trying to drive systemic change.</p>
+
+      <p>Together, ID Lab and BSSF named an instinct I'd carried for years: that business is meant to help people and the planet thrive, not only return capital — and that I want to help build one that does. That conviction was quietly pulling me off the default track all year, and it's a large part of why I can now articulate the turn I'm taking, instead of just feeling it.</p>
+
+      <p>What I've decided to do with that conviction this summer — and how I'm learning to pace it for the person I actually am — is where the next post picks up.</p>
+
+    </div>
+
+    <div class="article-footer">
+      <p>If you've made it this far — thanks for reading. I'd love to hear what landed and what didn't.</p>
+      <div class="footer-links">
+        <a href="mailto:syserena@mit.edu">Reply by email</a>
+        <a href="../writings.html">More writings</a>
+        <a href="../index.html#projects">See what I'm building</a>
+      </div>
+    </div>
+
+  </article>
+
+  <footer class="site">Built with intention &amp; care &mdash; Serena Wang, 2026</footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+      })
+    );
+  </script>
+
+</body>
+</html>
