@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Early Access · Serena Wang</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Something new is in the works — a guided way for high-achievers to tell the difference between what they were supposed to want and what they actually want. Ask for early access." />
+<meta name="robots" content="index, follow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Karla:wght@300;400;500;600&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --ink: #1a1816;
+    --ink-soft: #3e3935;
+    --ink-light: #6b645c;
+    --ink-faint: #a8a098;
+    --line: #e8e4de;
+    --terracotta: #cc4425;
+    --terracotta-mid: #e07856;
+    --terracotta-light: #fce0d6;
+    --lavender: #6a4abf;
+    --lavender-light: #e4dbf5;
+    --marigold: #d99518;
+    --marigold-light: #fdf0cc;
+    --warm-cream: #f0e7da;
+    --font-serif: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+    --font-sans: 'Karla', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-script: 'Caveat', 'Bradley Hand', cursive;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  .container { max-width: 680px; margin: 0 auto; padding: 0 28px; }
+
+  /* back link */
+  .site-back { padding: 28px 0 0; }
+  .site-back a {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-light);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .site-back a:hover { color: var(--terracotta); border-color: var(--terracotta); }
+
+  /* hero */
+  .hero { padding: 84px 0 56px; position: relative; }
+  .eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin: 0 0 22px;
+  }
+  h1 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2.3rem, 6vw, 3.4rem);
+    line-height: 1.12;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+  .hero-script {
+    font-family: var(--font-script);
+    font-size: 1.45rem;
+    color: var(--ink-light);
+    margin: 18px 0 0;
+    transform: rotate(-1deg);
+    display: inline-block;
+  }
+
+  /* body copy */
+  .prose { padding-top: 8px; padding-bottom: 10px; }
+  .prose p {
+    font-size: 1.06rem;
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    font-weight: 300;
+  }
+  .prose p strong { font-weight: 600; color: var(--ink); }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 44px 0;
+  }
+  .whisper {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: var(--ink);
+    border-left: 3px solid var(--terracotta-mid);
+    padding: 6px 0 6px 24px;
+    margin: 36px 0;
+  }
+
+  /* status chip */
+  .status-row { display: flex; align-items: center; gap: 10px; margin: 34px 0 0; }
+  .status-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--marigold);
+    box-shadow: 0 0 0 4px var(--marigold-light);
+    flex: none;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 3px var(--marigold-light); }
+    50% { box-shadow: 0 0 0 7px rgba(217,149,24,0.12); }
+  }
+  .status-text { font-size: 0.9rem; color: var(--ink-light); letter-spacing: 0.02em; }
+
+  /* CTA card */
+  .cta-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 40px 36px;
+    margin: 52px 0 24px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(26,24,22,0.05);
+  }
+  .cta-card h2 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.7rem;
+    margin: 0 0 10px;
+  }
+  .cta-card p { color: var(--ink-light); font-size: 0.98rem; margin: 0 0 26px; font-weight: 300; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    padding: 15px 34px;
+    border-radius: 999px;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    box-shadow: 0 6px 18px rgba(204,68,37,0.28);
+  }
+  .cta-btn:hover {
+    background: var(--terracotta-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(204,68,37,0.32);
+  }
+  .cta-fineprint {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin: 18px 0 0 !important;
+  }
+
+  footer {
+    padding: 30px 0 46px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+  }
+  footer a { color: var(--ink-light); text-decoration: none; border-bottom: 1px solid var(--line); }
+  footer a:hover { color: var(--terracotta); border-color: var(--terracotta); }
+
+  /* soft blob accents */
+  .blob {
+    position: absolute; border-radius: 50%; filter: blur(70px); opacity: .5;
+    pointer-events: none; z-index: -1;
+  }
+  .blob-1 { width: 340px; height: 340px; background: var(--terracotta-light); top: -60px; right: -120px; }
+  .blob-2 { width: 300px; height: 300px; background: var(--lavender-light); top: 420px; left: -140px; }
+  .page-wrap { position: relative; overflow: hidden; }
+
+  @media (max-width: 560px) {
+    .hero { padding: 60px 0 40px; }
+    .cta-card { padding: 32px 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <div class="container site-back">
+    <a href="index.html">&larr; Back to serena wang</a>
+  </div>
+
+  <header class="hero">
+    <div class="container">
+      <p class="eyebrow">Current Build · Early Access</p>
+      <h1>You did everything right.<br><em>So why does it feel off?</em></h1>
+      <span class="hero-script">— a question I know from the inside</span>
+    </div>
+  </header>
+
+  <main class="container prose">
+    <p>There's a specific kind of lost that only high-achievers know. The degree, the offer, the title — every box checked. And underneath it, a quiet question that doesn't go away: <strong>is this what I actually want, or just what I was supposed to want?</strong></p>
+
+    <p>I've spent the better part of a decade living inside that question — through a career I was praised for, a pivot I couldn't explain to anyone at the time, and the slow, unglamorous work of separating what's truly mine from what I'd absorbed from family, culture, and everyone's expectations.</p>
+
+    <div class="whisper">Now I'm turning what I learned into something you can use.</div>
+
+    <p>I'm building a <strong>guided reflection experience</strong> for people navigating a career pivot or a quieter identity shift — a structured way to tell the difference between the expectations you've internalized and the direction that's actually yours. Not advice. Not a personality test. A place to hear yourself think, with the right questions in the right order.</p>
+
+    <p>That's all I'm saying publicly for now. The rest, you'll have to try.</p>
+
+    <div class="status-row">
+      <span class="status-dot"></span>
+      <span class="status-text">In prototype — testing with a small group this summer</span>
+    </div>
+
+    <hr class="divider" />
+
+    <section class="cta-card">
+      <h2>Want to be one of the first?</h2>
+      <p>Tell me you're in — one line is plenty. If you feel like sharing what's pulling you toward this, even better.</p>
+      <a class="cta-btn" href="mailto:syserena@mit.edu?subject=Early%20access%2C%20please&body=Hi%20Serena%2C%0A%0AI%27d%20like%20early%20access%20to%20what%20you%27re%20building.%0A%0AWhat%27s%20pulling%20me%20toward%20it%3A%20">Ask for early access</a>
+      <p class="cta-fineprint">One email when there's something to try. Nothing else, no list-selling, ever.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Built &amp; written by <a href="index.html">Serena Wang</a> · MIT Sloan MBA '27
+    </div>
+  </footer>
+</div>
+</body>
+</html>
