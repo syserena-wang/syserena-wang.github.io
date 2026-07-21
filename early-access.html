@@ -103,6 +103,26 @@
     border-top: 1px solid var(--line);
     margin: 44px 0;
   }
+  /* journey link */
+  .journey-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.8rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--terracotta); text-decoration: none;
+    margin: -4px 0 26px;
+    transition: gap .25s;
+  }
+  .journey-link:hover { gap: 16px; }
+  .journey-link .arr { width: 20px; height: 1px; background: var(--terracotta); position: relative; }
+  .journey-link .arr::after {
+    content: ''; position: absolute;
+    right: 0; top: -2.5px;
+    width: 6px; height: 6px;
+    border-right: 1px solid var(--terracotta);
+    border-top: 1px solid var(--terracotta);
+    transform: rotate(45deg);
+  }
+
   .whisper {
     font-family: var(--font-serif);
     font-style: italic;
@@ -217,6 +237,8 @@
 
     <p>I've spent the better part of a decade living inside that question — through a career I was praised for, a pivot I couldn't explain to anyone at the time, and the slow, unglamorous work of separating what's truly mine from what I'd absorbed from family, culture, and everyone's expectations.</p>
 
+    <a class="journey-link" href="writings/first-year-at-mit-sloan.html">Read more about my journey <span class="arr"></span></a>
+
     <div class="whisper">Now I'm turning what I learned into something you can use.</div>
 
     <p>I'm building a <strong>guided reflection experience</strong> for people navigating a career pivot or a quieter identity shift — a structured way to tell the difference between the expectations you've internalized and the direction that's actually yours. Not advice. Not a personality test. A place to hear yourself think, with the right questions in the right order.</p>
@@ -244,5 +266,6 @@
     </div>
   </footer>
 </div>
+    <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "421c35ab6ec64dbe85732730ae459869"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
