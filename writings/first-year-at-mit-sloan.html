@@ -246,6 +246,28 @@
     }
     .footer-links a:hover { border-color: var(--terracotta); }
 
+
+    /* ── COMMENTS ── */
+    .comments-section {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+    }
+    .comments-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .comments-title em { font-style: italic; font-weight: 500; color: var(--terracotta); }
+    .comments-note {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      margin-bottom: 22px;
+    }
+
     /* ── PAGE FOOTER ── */
     footer.site {
       text-align: center;
@@ -369,6 +391,20 @@
         <a href="../index.html#projects">See what I'm building</a>
       </div>
     </div>
+
+    <!-- COMMENTS -->
+    <section class="comments-section">
+      <h2 class="comments-title">Leave a <em>thought</em></h2>
+      <p class="comments-note">No account needed — just a name, or stay anonymous. Comments appear after a quick review.</p>
+      <div id="cusdis_thread"
+        data-host="https://cusdis.com"
+        data-app-id="fe9219c9-34a7-44d2-a872-a91bdbcaaf7a"
+        data-page-id="first-year-at-mit-sloan"
+        data-page-url="https://syserena-wang.github.io/writings/first-year-at-mit-sloan.html"
+        data-page-title="What my first year at MIT Sloan actually taught me"
+      ></div>
+      <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+    </section>
 
   </article>
 
