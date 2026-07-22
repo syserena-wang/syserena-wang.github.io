@@ -301,6 +301,8 @@
       margin-top: 56px;
       padding-top: 40px;
       border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 44px;
     }
     .comments-title {
       font-family: 'Cormorant Garamond', serif;
@@ -506,11 +508,16 @@
           }
           // "What readers said" label above the comment list, once comments exist
           var list = doc.querySelector("div[class*='mt-4'][class*='px-1']");
-          if (list && list.children.length && !doc.getElementById('sw-comments-label')) {
-            var lbl = doc.createElement('div');
-            lbl.id = 'sw-comments-label';
-            lbl.innerHTML = 'What readers <em>said</em>';
-            list.parentElement.insertBefore(lbl, list);
+          if (list) {
+            var lbl = doc.getElementById('sw-comments-label');
+            if (!lbl) {
+              lbl = doc.createElement('div');
+              lbl.id = 'sw-comments-label';
+              lbl.innerHTML = 'What readers <em>said</em>';
+              list.parentElement.insertBefore(lbl, list);
+            }
+            var hasComments = list.querySelectorAll("div[class*='my-4']").length > 0;
+            lbl.style.display = hasComments ? '' : 'none';
           }
         }
         function tick() {
