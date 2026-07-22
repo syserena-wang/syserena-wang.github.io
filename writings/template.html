@@ -458,6 +458,50 @@
         data-page-title="Post title"
       ></div>
       <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+      <!-- Style the Cusdis widget to match the site (it renders in a same-origin iframe) -->
+      <script>
+      (function () {
+        var CSS = [
+          ":root { color-scheme: light; }",
+          "body { font-family: 'Karla', -apple-system, sans-serif !important; color: #3e3935 !important; font-size: 15px !important; -webkit-font-smoothing: antialiased; }",
+          "label { font-size: 0.72rem !important; font-weight: 600 !important; text-transform: uppercase; letter-spacing: 1.5px; color: #a8a098 !important; }",
+          "input, textarea { font-family: 'Karla', sans-serif !important; font-size: 0.9rem !important; color: #1a1816 !important; background: #ffffff !important; border: 1px solid #e8e4de !important; border-radius: 4px !important; padding: 10px 12px !important; outline: none !important; transition: border-color .25s; }",
+          "input:focus, textarea:focus { border-color: #cc4425 !important; }",
+          "button { font-family: 'Karla', sans-serif !important; font-size: 0.72rem !important; font-weight: 700 !important; letter-spacing: 2px; text-transform: uppercase; color: #ffffff !important; background: #cc4425 !important; border: none !important; border-radius: 3px !important; padding: 10px 22px !important; cursor: pointer; transition: background .25s; }",
+          "button:hover { background: #a83619 !important; }",
+          "[class*='bg-blue'] { background: #c8edda !important; color: #2a8c55 !important; font-size: 0.82rem !important; font-weight: 600 !important; border-radius: 4px !important; padding: 10px 14px !important; }",
+          "[class*='text-gray-500'] { color: #a8a098 !important; font-size: 0.7rem !important; }",
+          "a { color: #a8a098 !important; }"
+        ].join('\n');
+        function styleWidget(iframe) {
+          var doc = iframe.contentDocument;
+          if (!doc || !doc.head || !doc.body) return;
+          if (!doc.getElementById('sw-fonts')) {
+            var l = doc.createElement('link');
+            l.id = 'sw-fonts'; l.rel = 'stylesheet';
+            l.href = 'https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&display=swap';
+            doc.head.appendChild(l);
+          }
+          if (!doc.getElementById('sw-cusdis-style')) {
+            var st = doc.createElement('style');
+            st.id = 'sw-cusdis-style';
+            st.textContent = CSS;
+            doc.head.appendChild(st);
+            iframe.setAttribute('scrolling', 'no');
+            var sync = function () { iframe.style.height = (doc.body.scrollHeight + 2) + 'px'; };
+            new ResizeObserver(sync).observe(doc.body);
+            sync();
+            setTimeout(sync, 600);
+          }
+        }
+        function tick() {
+          var iframe = document.querySelector('#cusdis_thread iframe');
+          if (iframe) { try { styleWidget(iframe); } catch (e) {} }
+        }
+        var fast = setInterval(tick, 300);
+        setTimeout(function () { clearInterval(fast); setInterval(tick, 2000); }, 30000);
+      })();
+      </script>
     </section>
 
   </article>
