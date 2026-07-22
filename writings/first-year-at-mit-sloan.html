@@ -423,7 +423,8 @@
           "button[class*='bg-gray-200']:hover { background: #a83619 !important; }",
           "button[class*='text-gray-500'] { font-family: 'Karla', sans-serif !important; font-size: 0.68rem !important; font-weight: 700 !important; letter-spacing: 2px; text-transform: uppercase; color: #cc4425 !important; background: none !important; border: none !important; padding: 2px 0 !important; cursor: pointer; transition: color .25s; }",
           "button[class*='text-gray-500']:hover { color: #a83619 !important; }",
-          "#sw-comments-label { font-family: 'Karla', sans-serif; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #a8a098; margin: 34px 0 -6px; }",
+          "#sw-comments-label { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; letter-spacing: -0.3px; color: #1a1816; margin: 44px 0 2px; }",
+          "#sw-comments-label em { font-style: italic; font-weight: 500; color: #cc4425; }",
           "div[class*='text-center'] a { font-size: 0.68rem !important; color: #a8a098 !important; }"
         ].join('\n');
         function styleWidget(iframe) {
@@ -451,7 +452,7 @@
           if (list && list.children.length && !doc.getElementById('sw-comments-label')) {
             var lbl = doc.createElement('div');
             lbl.id = 'sw-comments-label';
-            lbl.textContent = 'What readers said';
+            lbl.innerHTML = 'What readers <em>said</em>';
             list.parentElement.insertBefore(lbl, list);
           }
         }
