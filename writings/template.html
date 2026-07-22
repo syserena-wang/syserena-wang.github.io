@@ -434,7 +434,6 @@
     <div class="article-footer">
       <p>If you've made it this far — thanks for reading. I'd love to hear what landed and what didn't.</p>
       <div class="footer-links">
-        <a href="mailto:syserena@mit.edu">Reply by email</a>
         <a href="../writings.html">More writings</a>
         <a href="../index.html#projects">See what I'm building</a>
       </div>
@@ -467,11 +466,19 @@
           "label { font-size: 0.72rem !important; font-weight: 600 !important; text-transform: uppercase; letter-spacing: 1.5px; color: #a8a098 !important; }",
           "input, textarea { font-family: 'Karla', sans-serif !important; font-size: 0.9rem !important; color: #1a1816 !important; background: #ffffff !important; border: 1px solid #e8e4de !important; border-radius: 4px !important; padding: 10px 12px !important; outline: none !important; transition: border-color .25s; }",
           "input:focus, textarea:focus { border-color: #cc4425 !important; }",
-          "button { font-family: 'Karla', sans-serif !important; font-size: 0.72rem !important; font-weight: 700 !important; letter-spacing: 2px; text-transform: uppercase; color: #ffffff !important; background: #cc4425 !important; border: none !important; border-radius: 3px !important; padding: 10px 22px !important; cursor: pointer; transition: background .25s; }",
-          "button:hover { background: #a83619 !important; }",
           "[class*='bg-blue'] { background: #c8edda !important; color: #2a8c55 !important; font-size: 0.82rem !important; font-weight: 600 !important; border-radius: 4px !important; padding: 10px 14px !important; }",
-          "[class*='text-gray-500'] { color: #a8a098 !important; font-size: 0.7rem !important; }",
-          "a { color: #a8a098 !important; }"
+          "div[class*='mt-4'] > div[class*='my-4'] { border-top: 1px solid #e8e4de; padding-top: 18px; margin: 18px 0 0 !important; }",
+          "div[class*='mr-2'][class*='font-medium'] { font-family: 'Karla', sans-serif !important; font-size: 0.82rem !important; font-weight: 700 !important; letter-spacing: 0.5px; color: #1a1816 !important; }",
+          "div[class*='text-sm'][class*='text-gray-500'] { font-size: 0.7rem !important; color: #a8a098 !important; letter-spacing: 0.5px; margin-top: 2px; }",
+          "div[class*='my-2'] { color: #3e3935 !important; }",
+          "div[class*='my-2'] p { font-family: 'Cormorant Garamond', serif !important; font-size: 1.15rem !important; font-weight: 500; line-height: 1.6; color: #3e3935 !important; }",
+          "[class*='border-l'] { border-left: 1px solid #e8e4de !important; }",
+          "button[class*='bg-gray-200'] { font-family: 'Karla', sans-serif !important; font-size: 0.72rem !important; font-weight: 700 !important; letter-spacing: 2px; text-transform: uppercase; color: #ffffff !important; background: #cc4425 !important; border: none !important; border-radius: 3px !important; padding: 10px 22px !important; cursor: pointer; transition: background .25s; }",
+          "button[class*='bg-gray-200']:hover { background: #a83619 !important; }",
+          "button[class*='text-gray-500'] { font-family: 'Karla', sans-serif !important; font-size: 0.68rem !important; font-weight: 700 !important; letter-spacing: 2px; text-transform: uppercase; color: #cc4425 !important; background: none !important; border: none !important; padding: 2px 0 !important; cursor: pointer; transition: color .25s; }",
+          "button[class*='text-gray-500']:hover { color: #a83619 !important; }",
+          "#sw-comments-label { font-family: 'Karla', sans-serif; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #a8a098; margin: 34px 0 -6px; }",
+          "div[class*='text-center'] a { font-size: 0.68rem !important; color: #a8a098 !important; }"
         ].join('\n');
         function styleWidget(iframe) {
           var doc = iframe.contentDocument;
@@ -479,7 +486,7 @@
           if (!doc.getElementById('sw-fonts')) {
             var l = doc.createElement('link');
             l.id = 'sw-fonts'; l.rel = 'stylesheet';
-            l.href = 'https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&display=swap';
+            l.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap';
             doc.head.appendChild(l);
           }
           if (!doc.getElementById('sw-cusdis-style')) {
@@ -492,6 +499,14 @@
             new ResizeObserver(sync).observe(doc.body);
             sync();
             setTimeout(sync, 600);
+          }
+          // "What readers said" label above the comment list, once comments exist
+          var list = doc.querySelector("div[class*='mt-4'][class*='px-1']");
+          if (list && list.children.length && !doc.getElementById('sw-comments-label')) {
+            var lbl = doc.createElement('div');
+            lbl.id = 'sw-comments-label';
+            lbl.textContent = 'What readers said';
+            list.parentElement.insertBefore(lbl, list);
           }
         }
         function tick() {
